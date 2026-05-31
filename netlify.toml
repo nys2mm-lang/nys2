@@ -1,0 +1,43 @@
+import { getStore } from "@netlify/blobs";
+
+const STORE_NAME = "ny-shell-room-state";
+const STORE_KEY = "site-state-v1";
+
+function json(data, status = 200) {
+  return Response.json(data, {
+    status,
+    headers: {
+      "Cache-Control": "no-store"
+    }
+  });
+}
+
+export default async function handler(request) {
+  const store = getStore(STORE_NAME);
+
+  if (request.method === "GET") {
+    const saved = await store.get(STORE_KEY, { type: "json" });
+    return json(saved || { updatedAt: null, state: {} });
+  }
+
+  if (request.method === "POST") {
+    const body = await request.json().catch(() => ({}));
+
+    // Netlify Environment variable SITE_PASSWORD를 설정하면 그 비밀번호를 알아야 저장 가능.
+    // 설정하지 않으면 테스트용으로 누구나 저장 가능해져서 공개 사이트에는 비추천.
+    const requiredPassword = process.env.SITE_PASSWORD;
+    if (requiredPassword && body.password !== requiredPassword) {
+      return json({ ok: false, error: "wrong password" }, 401);
+    }
+
+    const state = body.state && typeof body.state === "object" ? body.state : {};
+    await store.setJSON(STORE_KEY, {
+      updatedAt: Date.now(),
+      state
+    });
+
+    return json({ ok: true });
+  }
+
+  return json({ ok: false, error: "method not allowed" }, 405);
+}

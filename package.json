@@ -1,0 +1,4360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@Ny_S2__</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Nunito:wght@400;600;700&family=Parisienne&display=swap');
+
+    * { box-sizing: border-box; }
+
+    :root {
+      --ink: #365069;
+      --muted: #7892aa;
+      --navy: #587ba0;
+      --line: #dbe9f4;
+      --line2: #b8d4e9;
+      --panel: rgba(255,255,255,.94);
+      --shadow: 0 18px 46px rgba(147, 190, 226, .18);
+      --soft-shadow: 0 10px 26px rgba(147, 190, 226, .13);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Sans KR", "Nunito", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 14% 10%, rgba(221,244,255,.98), transparent 24%),
+        radial-gradient(circle at 88% 18%, rgba(255,255,255,.98), transparent 20%),
+        radial-gradient(circle at 72% 84%, rgba(199,232,255,.58), transparent 28%),
+        linear-gradient(180deg, #fbfeff, #f3faff 58%, #ffffff);
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      background:
+        radial-gradient(circle at 10% 18%, rgba(255,255,255,.72), transparent 8%),
+        radial-gradient(circle at 76% 24%, rgba(255,255,255,.58), transparent 8%),
+        radial-gradient(circle at 36% 82%, rgba(255,255,255,.50), transparent 9%);
+      filter: blur(7px);
+    }
+
+    body::after {
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.88) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(206,235,255,.50) 0 1px, transparent 1.5px);
+      background-size: 52px 52px, 96px 96px;
+      background-position: 0 0, 20px 26px;
+      opacity: .52;
+    }
+
+    .serif { font-family: "Cormorant Garamond", serif; letter-spacing: -0.03em; }
+    .script { font-family: "Parisienne", cursive; }
+
+    button, input, textarea, select { font-family: inherit; }
+    button { border: 0; cursor: pointer; }
+
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none !important;
+      overflow: hidden;
+    }
+
+    .sparkle {
+      position: absolute;
+      top: -40px;
+      color: rgba(255,255,255,.98);
+      font-size: 20px;
+      text-shadow:
+        0 0 6px rgba(255,255,255,1),
+        0 0 16px rgba(170,220,255,.95),
+        0 0 26px rgba(255,255,255,.85);
+      animation: fallStar linear infinite;
+      pointer-events: none !important;
+    }
+
+    .sparkle::before { content: "✚"; }
+    .sparkle.b::before { content: "✦"; }
+    .sparkle.c::before { content: "✧"; }
+    .sparkle.d::before { content: "⊹"; }
+
+    .sparkle::after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      width: 70px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.9));
+      transform: rotate(-18deg);
+      transform-origin: right center;
+      pointer-events: none !important;
+    }
+
+    @keyframes fallStar {
+      0% { transform: translate3d(0, 0, 0) rotate(18deg); opacity: 0; }
+      10% { opacity: 1; }
+      80% { opacity: .75; }
+      100% { transform: translate3d(-330px, 830px, 0) rotate(18deg); opacity: 0; }
+    }
+
+    .entry-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 50% 28%, rgba(255,255,255,.95), transparent 18%),
+        linear-gradient(180deg, #e8f7ff, #ffffff);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .entry-screen.hidden {
+      opacity: 0;
+      transform: scale(1.03);
+      pointer-events: none;
+    }
+
+    .entry-card {
+      width: min(520px, calc(100% - 36px));
+      text-align: center;
+      border-radius: 30px;
+      padding: 38px 26px;
+      background: rgba(255,255,255,.84);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 24px 70px rgba(147,190,226,.25);
+    }
+
+    .entry-halo {
+      width: 100px;
+      height: 26px;
+      border-radius: 999px;
+      border: 3px solid rgba(255,242,185,.95);
+      box-shadow: 0 0 18px rgba(255,238,170,.72);
+      margin: 0 auto 10px;
+      background: rgba(255,255,255,.25);
+      animation: halo 2.8s ease-in-out infinite;
+    }
+
+    @keyframes halo {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .entry-card h1 {
+      margin: 0 0 22px;
+      font-size: clamp(52px, 10vw, 90px);
+      color: #8db7d8;
+      text-shadow: 0 0 18px rgba(255,255,255,.9);
+    }
+
+    .enter-btn {
+      position: relative;
+      z-index: 10001;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffffff, #eef8ff);
+      color: var(--navy);
+      border: 1px solid var(--line2);
+      box-shadow: var(--soft-shadow);
+      font-weight: 700;
+    }
+
+    .site {
+      position: relative;
+      z-index: 2;
+      width: min(1160px, calc(100% - 28px));
+      margin: 16px auto 34px;
+      display: none;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .identity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .identity-mark {
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      color: #7aa1c8;
+      background:
+        radial-gradient(circle at 34% 26%, rgba(255,255,255,.95), transparent 22%),
+        linear-gradient(180deg, #bfe6ff, #ffffff 70%);
+      border: 2px solid rgba(255,255,255,.96);
+      box-shadow: 0 0 0 1px var(--line), var(--soft-shadow);
+    }
+
+    .identity h1 { margin: 0; font-size: 34px; line-height: 1; }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip, .tab-btn, .link-btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #fff, #f2f9ff);
+      border: 1px solid var(--line);
+      color: var(--navy);
+      box-shadow: var(--soft-shadow);
+      font-size: 13px;
+    }
+
+    .chip.active, .tab-btn.active {
+      border-color: var(--line2);
+      background: linear-gradient(180deg, #eaf7ff, #fff);
+      font-weight: 700;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 160px;
+      overflow: hidden;
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.05)),
+        linear-gradient(135deg, #d6eeff, #eef8ff 44%, #fff);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      padding: 28px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(255,255,255,.94), transparent 10%),
+        radial-gradient(circle at 76% 18%, rgba(255,255,255,.76), transparent 8%),
+        radial-gradient(circle at 50% 55%, rgba(213,235,255,.46), transparent 18%);
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .hero-title .over {
+      font-size: 28px;
+      color: rgba(255,255,255,.98);
+      text-shadow: 0 0 14px rgba(255,255,255,.9);
+      margin-bottom: -6px;
+    }
+
+    .hero-title h2 {
+      margin: 0;
+      font-size: clamp(48px, 8vw, 78px);
+      line-height: .9;
+      color: rgba(255,255,255,.98);
+      text-shadow: 0 0 18px rgba(255,255,255,.75);
+      font-weight: 500;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .card { padding: 16px; }
+
+    .card-title {
+      margin-bottom: 12px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .small-label { color: var(--muted); font-size: 12px; }
+
+    .nav-list { display: grid; gap: 8px; }
+
+    .nav-list button {
+      text-align: left;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #f7fbff);
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-list button.active {
+      background: linear-gradient(180deg, #ecf7ff, #ffffff);
+      border-color: var(--line2);
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .home-wrap {
+      width: min(640px, 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .home-banner {
+      min-height: 92px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(255,255,255,.65), transparent 18%),
+        linear-gradient(90deg, #cdeeff, #eaf8ff 52%, #ffffff);
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+      display: grid;
+      place-items: center;
+      color: rgba(88,123,160,.42);
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 14px;
+    }
+
+    .profile-card,
+    .decor-card,
+    .calendar-card {
+      border-radius: 18px;
+      background: rgba(255,255,255,.96);
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .profile-image {
+      width: 112px;
+      height: 112px;
+      border-radius: 999px;
+      margin: 0 auto 18px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 34% 26%, rgba(255,255,255,.95), transparent 22%),
+        linear-gradient(180deg, #bfe6ff, #ffffff 70%);
+      border: 2px solid rgba(255,255,255,.96);
+      box-shadow: 0 0 0 1px var(--line), var(--soft-shadow);
+      color: #6f9fc5;
+      font-size: 30px;
+      overflow: hidden;
+    }
+
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-card h3 {
+      margin: 0 0 12px;
+      font-size: 30px;
+    }
+
+    .unicode-line {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+      white-space: pre-wrap;
+      margin: 0;
+    }
+
+    .decor-card {
+      display: grid;
+      gap: 9px;
+      padding: 14px;
+    }
+
+    .decor-row {
+      min-height: 46px;
+      border-radius: 12px;
+      background:
+        linear-gradient(90deg, rgba(216,239,255,.9), rgba(255,255,255,.72)),
+        repeating-linear-gradient(-10deg, rgba(88,123,160,.08) 0 6px, transparent 6px 12px);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: #7da5c5;
+      font-size: 13px;
+      text-align: center;
+      padding: 8px;
+      overflow: hidden;
+    }
+
+    .calendar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .calendar-month {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 32px;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 7px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .calendar-grid div { padding: 5px 0; }
+
+    .calendar-grid .today {
+      background: #cfeeff;
+      border-radius: 999px;
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .form { display: grid; gap: 10px; margin-top: 14px; }
+    .form.two { grid-template-columns: 1fr 1fr; }
+
+    .form input, .form textarea, .form select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 12px 13px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .form textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .form .full { grid-column: 1 / -1; }
+
+    .mode-only-edit { display: none; }
+    body.edit-mode .mode-only-edit { display: grid; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .text-box {
+      padding: 14px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fff, #f2f9ff);
+      border: 1px solid var(--line);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+
+    .oc-grid, .entry-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .oc-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .oc-card, .entry {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #f9fcff);
+      border-radius: 14px;
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .oc-card h4, .entry h4 { margin: 0 0 6px; font-size: 15px; }
+    .oc-card p, .entry p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.72;
+      white-space: pre-wrap;
+    }
+
+    .oc-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #eef8ff, #fff);
+      border: 1px solid var(--line);
+      color: var(--navy);
+      font-size: 24px;
+      margin-bottom: 10px;
+      box-shadow: var(--soft-shadow);
+      overflow: hidden;
+    }
+
+    .oc-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .music-layout {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 14px;
+    }
+
+    .music-player-main {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,248,220,.62), transparent 18%),
+        linear-gradient(180deg, #fff, #f7fbff);
+      text-align: center;
+    }
+
+    .music-disc {
+      width: 138px;
+      height: 138px;
+      border-radius: 999px;
+      margin: 8px auto 14px;
+      background:
+        radial-gradient(circle, #fff 0 18%, #d9efff 19% 30%, #fff 31% 36%, #cfeaff 37% 100%);
+      border: 1px solid var(--line);
+      box-shadow: 0 0 20px rgba(196,230,255,.65), var(--soft-shadow);
+      display: grid;
+      place-items: center;
+      color: var(--navy);
+      font-size: 24px;
+    }
+
+    .music-controls { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+    .music-controls button {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #f3f9ff);
+      color: var(--navy);
+      font-size: 16px;
+    }
+
+    .playbar { height: 10px; border-radius: 999px; background: #edf7ff; overflow: hidden; margin-top: 12px; }
+    .playbar span { display: block; height: 100%; width: 38%; background: linear-gradient(90deg, #dbefff, #fff); }
+
+    .playlist { display: grid; gap: 10px; }
+    .playlist button {
+      text-align: left;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #f9fcff);
+      border-radius: 14px;
+      padding: 12px;
+      color: var(--ink);
+    }
+
+    .playlist button.active { border-color: var(--line2); background: linear-gradient(180deg, #eef8ff, #fff); }
+
+    .private-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .private-panel { display: none; }
+    .private-panel.active { display: block; }
+
+    .chat-card { overflow: hidden; border-radius: 18px; border: 1px solid var(--line); background: #fff; }
+
+    .window-bar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      background: linear-gradient(180deg, #e6f5ff, #d4ebff);
+      color: #6f90b2;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,.76);
+    }
+
+    .window-dots { display: flex; gap: 6px; }
+    .window-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.90);
+      display: inline-block;
+      border: 1px solid rgba(200,220,240,.85);
+    }
+
+    .chat-body { padding: 16px; background: linear-gradient(180deg, #fbfeff, #f6fbff); }
+    .char-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .char-tabs button {
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #f5fbff);
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .chat-box {
+      height: 330px;
+      overflow-y: auto;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .msg-row { display: flex; gap: 8px; align-items: flex-end; }
+    .msg-row.user { justify-content: flex-end; }
+
+    .bubble {
+      max-width: 78%;
+      padding: 12px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.67;
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+      white-space: pre-wrap;
+    }
+
+    .bot-bubble { background: #fff; color: var(--ink); border-bottom-left-radius: 6px; }
+    .user-bubble { background: #f2f9ff; color: var(--navy); border-bottom-right-radius: 6px; }
+
+    .mini-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
+      background: linear-gradient(180deg, #edf8ff, #fff);
+      display: grid;
+      place-items: center;
+      color: #86a7c8;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+    }
+
+    .quick-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 12px; }
+    .quick-row button {
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 12px;
+      padding: 8px;
+    }
+
+    .input-row input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .send-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #eef8ff, #fff);
+      border: 1px solid var(--line);
+      color: var(--navy);
+      font-size: 18px;
+    }
+
+    .lock-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20000;
+      background: rgba(220,238,252,.55);
+      backdrop-filter: blur(8px);
+      place-items: center;
+      padding: 20px;
+    }
+    .lock-backdrop.open { display: grid; }
+    .lock-box {
+      width: min(420px, 100%);
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.96);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 46px rgba(125,160,195,.22);
+      text-align: center;
+    }
+    .lock-box h3 { margin: 0 0 8px; font-size: 24px; }
+    .lock-box p { margin: 0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .lock-box input {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      outline: 0;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .lock-actions { display: flex; gap: 8px; }
+    .lock-actions button { flex: 1; }
+
+    @media (max-width: 820px) {
+      .site { width: min(100% - 20px, 720px); }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .layout, .grid-2, .oc-grid, .form.two, .music-layout {
+        grid-template-columns: 1fr;
+      }
+      .hero-title { text-align: left; }
+      .hero-title h2 { font-size: 58px; }
+    }
+  
+    .profile-bio {
+      max-width: 420px;
+      margin: 0 auto !important;
+      font-size: 13px !important;
+      line-height: 1.85 !important;
+      color: #6f93b4 !important;
+    }
+
+    .music-single-layout {
+      display: block;
+      width: min(760px, 100%);
+      margin: 0 auto;
+    }
+
+    .music-single-layout .music-player-main {
+      min-height: 430px;
+      display: grid;
+      align-content: center;
+    }
+
+    .youtube-edit-form {
+      width: min(460px, 100%);
+      margin: 18px auto 0;
+    }
+
+    .global-youtube-player {
+      position: fixed;
+      width: 1px;
+      height: 1px;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .global-youtube-player iframe {
+      width: 1px;
+      height: 1px;
+      border: 0;
+    }
+
+    @media (max-width: 820px) {
+      .music-single-layout .music-player-main {
+        min-height: 340px;
+      }
+    }
+
+  
+    .secret-calendar-wrap {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .secret-calendar-card {
+      width: 100%;
+      padding: 22px;
+    }
+
+    .calendar-arrow {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg,#fff,#f5fbff);
+      color: var(--muted);
+      box-shadow: var(--soft-shadow);
+      font-size: 16px;
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .secret-calendar-grid {
+      grid-template-columns: repeat(7, 1fr);
+      gap: 7px;
+    }
+
+    .calendar-weekday {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 4px 0 6px;
+    }
+
+    .calendar-day {
+      position: relative;
+      min-height: 50px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      padding: 4px 4px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .calendar-day:hover {
+      background: rgba(222,241,255,.55);
+      border-color: var(--line);
+    }
+
+    .calendar-day.today,
+    .calendar-day.selected {
+      background: linear-gradient(180deg,#d9f0ff,#f4fbff);
+      border-color: var(--line2);
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .calendar-day.other-month {
+      opacity: .38;
+    }
+
+    .day-number {
+      line-height: 1;
+      font-size: 14px;
+    }
+
+    .shell-indicators {
+      min-height: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .shell-indicators svg {
+      width: 11px;
+      height: 11px;
+      display: block;
+      fill: #7fb2de;
+    }
+
+    .shell-more {
+      font-size: 10px;
+      color: #7aa3c6;
+      line-height: 1;
+    }
+
+    .secret-calendar-note {
+      margin: 14px 0 0;
+      font-size: 13px;
+      color: #7892aa;
+      text-align: center;
+    }
+
+    .todo-board {
+      min-height: 328px;
+      border-radius: 18px;
+      background: linear-gradient(180deg,#fff,#f9fcff);
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .todo-board-head h4 {
+      margin: 0 0 4px;
+      font-size: 32px;
+      color: var(--ink);
+    }
+
+    .todo-board-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .todo-list {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .todo-empty {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg,#fff,#fbfeff);
+      color: var(--muted);
+      border-radius: 14px;
+      padding: 18px;
+      min-height: 82px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .todo-item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg,#fff,#fbfeff);
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow: 0 8px 18px rgba(147,190,226,.08);
+    }
+
+    .todo-check {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 0;
+      background: #98b8ff;
+      color: white;
+      font-size: 16px;
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,.04);
+    }
+
+    .todo-check.done {
+      background: #b9cffb;
+      color: #fefefe;
+    }
+
+    .todo-item.done .todo-title,
+    .todo-item.done .todo-note {
+      opacity: .55;
+      text-decoration: line-through;
+    }
+
+    .todo-title {
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .todo-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 820px) {
+      .secret-calendar-wrap {
+        grid-template-columns: 1fr;
+      }
+      .todo-board {
+        min-height: 240px;
+      }
+    }
+
+  
+    .todo-board-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .todo-add-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg,#ffffff,#edf8ff);
+      color: var(--navy);
+      box-shadow: var(--soft-shadow);
+      font-size: 24px;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+    }
+
+    .todo-add-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--line2);
+    }
+
+    .todo-item {
+      grid-template-columns: 1fr 40px !important;
+    }
+
+    .todo-check {
+      justify-self: end;
+      cursor: pointer;
+    }
+
+    .todo-check:not(.done) {
+      background: #ffffff !important;
+      border: 1px solid #b8d4e9 !important;
+      color: transparent !important;
+    }
+
+    .todo-check.done {
+      color: #ffffff !important;
+    }
+
+  
+    .calendar-head {
+      display: grid !important;
+      grid-template-columns: 36px 1fr 36px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .calendar-year-label {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .calendar-arrow {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .todo-item {
+      grid-template-columns: 1fr 34px 34px !important;
+    }
+
+    .todo-delete {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: #8aa8c4;
+      font-size: 16px;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .todo-delete:hover {
+      background: #f7fbff;
+      color: #557fa5;
+      border-color: var(--line2);
+    }
+
+  
+    .home-calendar-card .calendar-day {
+      min-height: 46px;
+    }
+
+    .home-calendar-grid {
+      grid-template-columns: repeat(7, 1fr);
+      gap: 7px;
+    }
+
+    .bot-settings-form {
+      margin: 0 0 14px;
+      grid-template-columns: 1fr;
+    }
+
+    .bot-settings-form textarea {
+      min-height: 76px;
+    }
+
+    .bot-mode-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+
+    .bot-mode-row .tab-btn {
+      padding: 8px 14px;
+    }
+
+    .chat-status-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+  
+    .music-help {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .youtube-player-box {
+      width: min(520px, 100%);
+      height: 0;
+      margin: 14px auto 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease, height .25s ease, border-color .25s ease;
+    }
+
+    .youtube-player-box.active {
+      height: 160px;
+      opacity: 1;
+      pointer-events: auto;
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+      background: #fff;
+    }
+
+    .youtube-player-box iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+  
+    .mode-toast {
+      position: fixed;
+      left: 50%;
+      top: 86px;
+      transform: translateX(-50%) translateY(-8px);
+      z-index: 30000;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.94);
+      border: 1px solid var(--line2);
+      box-shadow: 0 14px 36px rgba(147,190,226,.24);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .16s ease, transform .16s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .mode-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+  
+    .bot-mode-row {
+      position: relative;
+      z-index: 5;
+      pointer-events: auto;
+    }
+
+    .bot-mode-row .tab-btn {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+  
+    .talk-phone {
+      width: min(520px, 100%);
+      margin: 0 auto;
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff, #f6fbff);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .talk-header {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, #e6f5ff, #d7eeff);
+      border-bottom: 1px solid rgba(255,255,255,.8);
+    }
+
+    .talk-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: var(--navy);
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(255,255,255,.95);
+      box-shadow: var(--soft-shadow);
+      font-weight: 700;
+    }
+
+    .talk-name {
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .talk-status {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    .talk-screen {
+      height: 390px;
+      overflow-y: auto;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(255,255,255,.72), transparent 12%),
+        linear-gradient(180deg, #f2f9ff, #fbfeff);
+    }
+
+    .talk-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .talk-row.me {
+      justify-content: flex-end;
+    }
+
+    .talk-bubble {
+      max-width: 74%;
+      padding: 10px 12px;
+      border-radius: 18px;
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .talk-bubble.bot {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      border-bottom-left-radius: 6px;
+    }
+
+    .talk-bubble.me {
+      background: #d9efff;
+      border: 1px solid #c4e4fb;
+      color: var(--navy);
+      border-bottom-right-radius: 6px;
+    }
+
+    .talk-time {
+      font-size: 10px;
+      color: var(--muted);
+      margin: 0 2px 2px;
+      white-space: nowrap;
+    }
+
+    .talk-quick-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding: 10px 12px 0;
+      background: #fbfeff;
+    }
+
+    .talk-quick-row button {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 7px 10px;
+    }
+
+    .talk-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      background: #fbfeff;
+      border-top: 1px solid var(--line);
+    }
+
+    .talk-input-row input {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 11px 14px;
+      outline: 0;
+      color: var(--ink);
+    }
+
+    .talk-input-row button {
+      min-width: 62px;
+      border-radius: 999px;
+      border: 1px solid var(--line2);
+      background: linear-gradient(180deg, #fff, #eef8ff);
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+  
+    .bot-current-mode {
+      align-self: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bot-mode-row,
+    .bot-mode-row button {
+      position: relative;
+      z-index: 50;
+      pointer-events: auto !important;
+    }
+
+  
+    .talk-empty {
+      margin: auto;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      opacity: .72;
+    }
+
+    .talk-typing-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .talk-typing-bubble {
+      width: 54px;
+      height: 34px;
+      border-radius: 18px;
+      border-bottom-left-radius: 6px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #9ebbd4;
+      animation: typingBounce 1s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: .15s; }
+    .typing-dot:nth-child(3) { animation-delay: .3s; }
+
+    @keyframes typingBounce {
+      0%, 70%, 100% { transform: translateY(0); opacity: .45; }
+      35% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    .talk-clear-btn {
+      margin-left: auto;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.95);
+      background: rgba(255,255,255,.72);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 10px;
+    }
+
+  
+    .chat-typing-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .chat-typing-bubble {
+      width: 58px;
+      height: 36px;
+      border-radius: 18px;
+      border-bottom-left-radius: 6px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .chat-typing-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #9ebbd4;
+      animation: typingBounce 1s infinite ease-in-out;
+    }
+
+    .chat-typing-dot:nth-child(2) { animation-delay: .15s; }
+    .chat-typing-dot:nth-child(3) { animation-delay: .3s; }
+
+    .api-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .bot-settings-form .api-url-input {
+      grid-column: 1 / -1;
+    }
+
+  
+    .clear-chat-btn,
+    .talk-clear-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.75);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 10px;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .clear-chat-btn:hover,
+    .talk-clear-btn:hover {
+      border-color: var(--line2);
+      color: var(--navy);
+    }
+
+    .chat-empty {
+      margin: auto;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      opacity: .72;
+    }
+
+  
+    .pretty-lock-box {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(220,244,255,.9), transparent 38%),
+        rgba(255,255,255,.96) !important;
+    }
+
+    .pretty-small-halo {
+      width: 72px !important;
+      height: 18px !important;
+      margin-bottom: 8px !important;
+      opacity: .88;
+    }
+
+    .clear-chat-btn,
+    .talk-clear-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 10px;
+      box-shadow: var(--soft-shadow);
+      margin-left: auto;
+      cursor: pointer;
+      position: relative;
+      z-index: 50;
+    }
+
+    .clear-chat-btn:hover,
+    .talk-clear-btn:hover {
+      border-color: var(--line2);
+      color: var(--navy);
+      background: #fff;
+    }
+
+    #prettyEditGate.open,
+    #prettyClearGate.open {
+      display: grid !important;
+    }
+
+  
+    .sparkles,
+    .sparkle,
+    .sparkle::before,
+    .sparkle::after {
+      pointer-events: none !important;
+    }
+
+    #editBtn,
+    .clear-chat-btn,
+    .talk-clear-btn {
+      position: relative !important;
+      z-index: 5000 !important;
+      pointer-events: auto !important;
+      cursor: pointer !important;
+    }
+
+    .ny-lock-box {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(220,244,255,.9), transparent 38%),
+        rgba(255,255,255,.96) !important;
+    }
+
+    .ny-small-halo {
+      width: 72px !important;
+      height: 18px !important;
+      margin-bottom: 8px !important;
+      opacity: .88;
+    }
+
+    .clear-chat-btn,
+    .talk-clear-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 10px;
+      box-shadow: var(--soft-shadow);
+      margin-left: auto;
+    }
+
+    .clear-chat-btn:hover,
+    .talk-clear-btn:hover {
+      border-color: var(--line2);
+      color: var(--navy);
+      background: #fff;
+    }
+
+    #nyEditGate.open,
+    #nyClearGate.open {
+      display: grid !important;
+    }
+
+  
+    #editBtn,
+    .clear-chat-btn,
+    .talk-clear-btn {
+      position: relative !important;
+      z-index: 5000 !important;
+      pointer-events: auto !important;
+      cursor: pointer !important;
+    }
+
+    .sparkles,
+    .sparkle,
+    .sparkle::before,
+    .sparkle::after {
+      pointer-events: none !important;
+    }
+
+    .ny-lock-box {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(220,244,255,.9), transparent 38%),
+        rgba(255,255,255,.96) !important;
+    }
+
+    .ny-small-halo {
+      width: 72px !important;
+      height: 18px !important;
+      margin-bottom: 8px !important;
+      opacity: .88;
+    }
+
+    .clear-chat-btn,
+    .talk-clear-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 10px;
+      box-shadow: var(--soft-shadow);
+      margin-left: auto;
+    }
+
+    #nyEditGate.open,
+    #nyClearGate.open {
+      display: grid !important;
+    }
+
+  
+    #editBtn,
+    .clear-chat-btn,
+    .talk-clear-btn {
+      position: relative !important;
+      z-index: 5000 !important;
+      pointer-events: auto !important;
+      cursor: pointer !important;
+    }
+
+    .sparkles,
+    .sparkle,
+    .sparkle::before,
+    .sparkle::after {
+      pointer-events: none !important;
+    }
+
+    .ny-lock-box {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(220,244,255,.9), transparent 38%),
+        rgba(255,255,255,.96) !important;
+    }
+
+    .ny-small-halo {
+      width: 72px !important;
+      height: 18px !important;
+      margin-bottom: 8px !important;
+      opacity: .88;
+    }
+
+    .clear-chat-btn,
+    .talk-clear-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 10px;
+      box-shadow: var(--soft-shadow);
+      margin-left: auto;
+    }
+
+    #nyEditGate.open,
+    #nyClearGate.open {
+      display: grid !important;
+    }
+
+  
+    .character-manager {
+      grid-column: 1 / -1;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg,#fff,#f8fcff);
+      border-radius: 16px;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .character-manager-head strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .character-manager-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .character-select-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .character-select-row select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 11px 12px;
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .character-edit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .character-edit-grid textarea,
+    .character-edit-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    .mini-avatar,
+    .talk-avatar,
+    .chat-character-icon {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mini-avatar img,
+    .talk-avatar img,
+    .chat-character-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .chat-character-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chat-character-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    @media (max-width: 820px) {
+      .character-edit-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  
+    .talk-settings-panel {
+      margin: 0 0 14px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg,#fff,#f8fcff);
+      border-radius: 16px;
+      padding: 14px;
+      gap: 10px;
+    }
+
+    .talk-settings-title strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .talk-settings-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .talk-character-select-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .talk-character-select-row select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 11px 12px;
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .talk-character-add-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .talk-character-add-grid textarea,
+    .talk-character-add-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 820px) {
+      .talk-character-add-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  
+    /* Calendar icons hidden: keep calendar/date click logic intact */
+    .shell-indicators,
+    .shell-more {
+      display: none !important;
+    }
+
+  
+    .youtube-open-btn {
+      margin: 10px auto 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 13px;
+      box-shadow: var(--soft-shadow);
+      cursor: pointer;
+    }
+
+    .youtube-open-btn:hover {
+      border-color: var(--line2);
+      color: var(--navy);
+      background: #fff;
+    }
+
+  
+    #musicHelp:empty {
+      display: none !important;
+    }
+
+  
+    .diary-delete-btn {
+      margin-left: auto;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 10px;
+      box-shadow: var(--soft-shadow);
+      cursor: pointer;
+    }
+
+    .diary-delete-btn:hover {
+      border-color: var(--line2);
+      color: var(--navy);
+      background: #fff;
+    }
+
+    .entry .tag-row {
+      align-items: center;
+    }
+
+  
+    .oc-closet-edit-form {
+      gap: 12px;
+    }
+
+    .oc-image-upload-box {
+      min-height: 64px;
+      border: 1px dashed var(--line2);
+      border-radius: 18px;
+      background: rgba(255,255,255,.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      cursor: pointer;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .oc-image-upload-box input {
+      display: none;
+    }
+
+    .oc-color-picker-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .oc-color-picker-row input[type="color"] {
+      width: 44px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 4px;
+      cursor: pointer;
+    }
+
+    .oc-grid-large {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .oc-card.large {
+      padding: 16px;
+      border-radius: 28px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(248,252,255,.92));
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 40px rgba(143,190,227,.12);
+      display: grid;
+      gap: 16px;
+    }
+
+    .oc-card-image-large {
+      width: 100%;
+      min-height: 360px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(255,255,255,.7), rgba(213,235,255,.52));
+      border: 1px solid rgba(255,255,255,.85);
+      display: grid;
+      place-items: center;
+      color: rgba(80,100,120,.35);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .oc-card-image-large img {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .oc-card-body {
+      display: grid;
+      gap: 10px;
+    }
+
+    .oc-card-body h4 {
+      margin: 0;
+      font-size: clamp(24px, 3.5vw, 40px);
+      color: var(--ink);
+    }
+
+    .oc-pill {
+      width: fit-content;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: white;
+      font-size: 13px;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .oc-card-desc {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+      white-space: pre-wrap;
+    }
+
+    .oc-meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .oc-color-chip {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 3px solid rgba(255,255,255,.95);
+      box-shadow: 0 8px 18px rgba(90,130,170,.18);
+      flex: 0 0 auto;
+    }
+
+    @media (max-width: 760px) {
+      .oc-card-image-large,
+      .oc-card-image-large img {
+        min-height: 250px;
+      }
+    }
+
+  
+    .oc-action-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .oc-action-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 12px;
+      padding: 7px 12px;
+      box-shadow: var(--soft-shadow);
+      cursor: pointer;
+    }
+
+    .oc-action-btn:hover {
+      border-color: var(--line2);
+      color: var(--navy);
+      background: #fff;
+    }
+
+    .oc-action-btn.delete:hover {
+      color: #d15b86;
+      border-color: rgba(255,139,190,.55);
+    }
+
+  </style>
+
+  <script>
+    window.__nyPendingClear = "";
+
+    function nyOpenModal(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add("open");
+      el.style.display = "grid";
+      var input = id === "nyEditGate" ? document.getElementById("nyEditPassword") : document.getElementById("nyClearPassword");
+      if (input) {
+        input.value = "";
+        setTimeout(function(){ input.focus(); }, 50);
+      }
+    }
+
+    function nyCloseModal(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove("open");
+      el.style.display = "none";
+      if (id === "nyClearGate") window.__nyPendingClear = "";
+    }
+
+    function nyOpenEdit() {
+      nyOpenModal("nyEditGate");
+    }
+
+    function nyConfirmEdit() {
+      var input = document.getElementById("nyEditPassword");
+      if (!input || input.value.trim() !== "ribbon") {
+        alert("비밀번호가 달라!");
+        return;
+      }
+      nyCloseModal("nyEditGate");
+      document.body.classList.add("edit-mode");
+      var viewer = document.getElementById("viewerBtn");
+      var edit = document.getElementById("editBtn");
+      if (viewer) viewer.classList.remove("active");
+      if (edit) edit.classList.add("active");
+      if (typeof setMode === "function") setMode("edit");
+    }
+
+    function nyOpenClear(target) {
+      window.__nyPendingClear = target;
+      var title = document.getElementById("nyClearTitle");
+      var text = document.getElementById("nyClearText");
+      if (title) title.textContent = target + " clear";
+      if (text) text.textContent = target + " 내용을 삭제하려면 비밀번호를 입력해줘.";
+      nyOpenModal("nyClearGate");
+    }
+
+    function nyConfirmClear() {
+      var input = document.getElementById("nyClearPassword");
+      if (!input || input.value.trim() !== "ribbon") {
+        alert("비밀번호가 달라!");
+        return;
+      }
+
+      if (window.__nyPendingClear === "Chat") {
+        nyMarkChatCleared();
+        try { if (typeof chatReplyTimer !== "undefined") clearTimeout(chatReplyTimer); } catch(e) {}
+        try { if (typeof chatIsTyping !== "undefined") chatIsTyping = false; } catch(e) {}
+        try { if (typeof messages !== "undefined") messages.length = 0; } catch(e) {}
+        ["dreamCharacterChatMessages","dreamCharacterChatMessagesV2","dreamCharacterChatMessagesV3","soluluChatMessages"].forEach(function(key){ localStorage.removeItem(key); });
+        var chatInput = document.getElementById("chatInput");
+        if (chatInput) chatInput.disabled = false;
+        try { if (typeof renderMessages === "function") renderMessages(); } catch(e) {}
+      }
+
+      if (window.__nyPendingClear === "Talk") {
+        try { if (typeof talkReplyTimer !== "undefined") clearTimeout(talkReplyTimer); } catch(e) {}
+        try { if (typeof talkIsTyping !== "undefined") talkIsTyping = false; } catch(e) {}
+        try { if (typeof talkMessages !== "undefined") talkMessages.length = 0; } catch(e) {}
+        ["soluluTalkMessages","soluluTalkMessagesV2","soluluTalkMessagesStable","dreamCharacterTalkMessages","dreamCharacterTalkMessagesV3","dreamCharacterTalkMessagesApiReady"].forEach(function(key){ localStorage.removeItem(key); });
+        var talkInput = document.getElementById("talkInput");
+        if (talkInput) talkInput.disabled = false;
+        try { if (typeof renderTalk === "function") renderTalk(); } catch(e) {}
+      }
+
+      nyCloseModal("nyClearGate");
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        if (document.getElementById("nyEditGate") && document.getElementById("nyEditGate").classList.contains("open")) nyConfirmEdit();
+        if (document.getElementById("nyClearGate") && document.getElementById("nyClearGate").classList.contains("open")) nyConfirmClear();
+      }
+    });
+  </script>
+
+  <script>
+    window.DEFAULT_SHELL_YOUTUBE = {
+      id: "BV62zJkSQpc",
+      list: "",
+      start: "1029",
+      title: "Music Box",
+      artist: "YouTube",
+      url: "https://www.youtube.com/watch?v=BV62zJkSQpc&t=1029s"
+    };
+
+    try {
+      const saved = JSON.parse(localStorage.getItem("shellYouTube") || "null");
+      if (!saved || saved.id === "BV62zJkSQpc") {
+        localStorage.setItem("shellYouTube", JSON.stringify(window.DEFAULT_SHELL_YOUTUBE));
+      }
+    } catch (e) {
+      localStorage.setItem("shellYouTube", JSON.stringify(window.DEFAULT_SHELL_YOUTUBE));
+    }
+  </script>
+
+</head>
+<body>
+  <div class="sparkles" aria-hidden="true">
+    <span class="sparkle" style="left: 8%; animation-duration: 7s; animation-delay: 0s;"></span>
+    <span class="sparkle b" style="left: 18%; animation-duration: 9s; animation-delay: 1.5s;"></span>
+    <span class="sparkle c" style="left: 28%; animation-duration: 8s; animation-delay: 3s;"></span>
+    <span class="sparkle d" style="left: 40%; animation-duration: 10s; animation-delay: .5s;"></span>
+    <span class="sparkle" style="left: 52%; animation-duration: 8.5s; animation-delay: 4s;"></span>
+    <span class="sparkle b" style="left: 64%; animation-duration: 11s; animation-delay: 2s;"></span>
+    <span class="sparkle c" style="left: 74%; animation-duration: 9.5s; animation-delay: 5s;"></span>
+    <span class="sparkle" style="left: 86%; animation-duration: 8s; animation-delay: 2.8s;"></span>
+    <span class="sparkle d" style="left: 96%; animation-duration: 12s; animation-delay: 6s;"></span>
+  </div>
+
+  <div class="entry-screen" id="entryScreen">
+    <div class="entry-card">
+      <div class="entry-halo"></div>
+      <h1 class="serif">𓈒𓏸 llem 𓏸𓈒</h1>
+      <button class="enter-btn" type="button" onclick="var entry=document.getElementById('entryScreen');var site=document.getElementById('site');if(entry){entry.classList.add('hidden');setTimeout(function(){entry.style.display='none';},850);}if(site){site.style.display='block';}if(typeof renderHomeCalendar==='function'){renderHomeCalendar();}if(typeof renderScheduleCalendar==='function'){renderScheduleCalendar();}if(typeof renderTodoPanel==='function'){renderTodoPanel();}">ENTER</button>
+    </div>
+  </div>
+
+  <div class="site" id="site">
+    <div class="topbar">
+      <div class="identity">
+        <div class="identity-mark">𓇼</div>
+        <div>
+          <h1 class="serif">@Ny_S2__</h1>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="chip active" id="viewerBtn" type="button" onclick="setMode('viewer')">뷰어모드</button>
+        <button class="chip" id="editBtn" type="button" onclick="nyOpenEdit(); return false;">편집모드</button>
+        <button class="chip" type="button" onclick="openGate()">secret room</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-title">
+        <div class="over script">welcome to</div>
+        <h2 class="serif">Dream house</h2>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside>
+        <section class="panel card">
+          <div class="card-title"><span class="serif">Menu</span><span class="small-label">click</span></div>
+          <div class="nav-list">
+            <button class="active" type="button" onclick="showSection('home', this)">Home <span>☁</span></button>
+            <button type="button" onclick="showSection('oc', this)">OC Closet <span>🎀</span></button>
+            <button type="button" onclick="showSection('music', this)">Music Box <span>🎧</span></button>
+            <button type="button" onclick="openGate()">Secret <span>🔒</span></button>
+          </div>
+        </section>
+      </aside>
+
+      <main>
+        <section class="section active" id="section-home">
+          <div class="home-wrap">
+            <div class="home-banner">𓈒𓏸 𓆩♡𓆪 𓂃 ୨୧ 𓂃 Dream house 𓂃 ୨୧ 𓂃 𓆩♡𓆪 𓏸𓈒</div>
+
+            <div class="profile-card">
+              <div class="profile-image" id="profileImageBox"><span id="profileInitial">♡</span></div>
+              <h3 class="serif" id="homeProfileTitle">llem</h3>
+              <p class="unicode-line profile-bio" id="homeProfileText">𓈒𓏸 𓆩♡𓆪 𓂃 ˚₊‧꒰ა ♡ ໒꒱‧₊˚ 𓂃 𓆩♡𓆪 𓏸𓈒</p>
+              <div class="form mode-only-edit">
+                <input id="editHomeProfileTitle" placeholder="홈 프로필 제목" />
+                <textarea id="editHomeProfileText" placeholder="트위터 바이오처럼 짧은 소개 / 꾸밈문구"></textarea>
+                <input type="file" accept="image/*" id="profileImageInput" />
+                <button class="link-btn" type="button" onclick="saveHome()">HOME 저장</button>
+              </div>
+            </div>
+
+            <div class="decor-card">
+              <div class="decor-row">𓈒𓏸 𓆩♡𓆪 𓂃 ˚₊‧꒰ა ♡ ໒꒱‧₊˚ 𓂃 𓆩♡𓆪 𓏸𓈒</div>
+              <div class="decor-row">˚₊‧꒰ა 𓂃 ♡ 𓂃 ໒꒱‧₊˚ 𓈒𓏸 ୨୧ 𓏸𓈒</div>
+              <div class="decor-row">⋆｡˚ ☁︎ ˚｡⋆｡ 𓈒𓏸 𓂃 ♡ 𓂃 𓏸𓈒</div>
+              <div class="decor-row">୨୧ 𓂃 𓈒𓏸 𓆩♡𓆪 𓏸𓈒 𓂃 ୨୧</div>
+            </div>
+
+            <div class="calendar-card home-calendar-card">
+              <div class="calendar-head">
+                <button class="calendar-arrow" type="button" onclick="changeHomeCalendarMonth(-1)">‹</button>
+                <span class="calendar-year-label" id="homeCalendarYearLabel">2026</span>
+                <button class="calendar-arrow" type="button" onclick="changeHomeCalendarMonth(1)">›</button>
+              </div>
+              <div class="calendar-month" id="homeCalendarMonthLabel">May</div>
+              <div class="calendar-grid home-calendar-grid" id="homeCalendarGrid"></div>
+              <p class="secret-calendar-note" id="homeCalendarNote">아직 일정이 없어요.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel card section" id="section-oc">
+          <div class="card-title"><span class="serif">OC Closet</span><span class="small-label">public</span></div>
+          <div class="form two mode-only-edit oc-closet-edit-form">
+            <input type="hidden" id="ocEditIndex" value="-1" />
+            <input id="ocName" placeholder="OC 이름" />
+            <input id="ocKeyword" placeholder="키워드" />
+            <input id="ocColorHex" placeholder="#9ee7ef" />
+            <label class="full oc-image-upload-box">
+              <span>대표이미지 업로드</span>
+              <input id="ocImageFile" type="file" accept="image/*" />
+            </label>
+            <div class="full oc-color-picker-row">
+              <span>직접 색 고르기</span>
+              <input id="ocColorPicker" type="color" value="#9ee7ef" />
+              <button class="link-btn" type="button" onclick="applyPickedOCColor()">색 적용</button>
+            </div>
+            <textarea class="full" id="ocDesc" placeholder="OC 소개"></textarea>
+            <button class="link-btn" type="button" onclick="cancelOCEdit()">수정 취소</button>
+            <button class="link-btn" type="button" onclick="saveOC()">OC 저장 / 수정</button>
+          </div>
+          <div class="oc-grid oc-grid-large" id="ocGrid"></div>
+        </section>
+
+        <section class="panel card section" id="section-music">
+          <div class="card-title"><span class="serif">Music Box</span><span class="small-label">public</span></div>
+          <div class="music-single-layout">
+            <div class="music-player-main">
+              <div class="music-disc" id="musicIcon">𓇼</div>
+              <h4 class="serif" id="musicTitle">Music Box</h4>
+              <p id="musicArtist">YouTube playlist</p>
+              <div class="playbar"><span id="musicProgress"></span></div>
+              <div class="music-controls">
+                <button type="button" onclick="restartYouTube()">↻</button>
+                <button type="button" onclick="toggleYouTube()" id="playButton">▶</button>
+                <button type="button" onclick="stopYouTube()">■</button>
+              </div>
+              <p class="music-help" id="musicHelp"></p>
+              <div class="youtube-player-box" id="youtubePlayerBox">
+                <iframe id="youtubeFrame" title="background music" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+              <button class="youtube-open-btn" id="openYouTubeButton" type="button" onclick="openYouTubeExternal()">YouTube에서 열기</button>
+              <div class="form mode-only-edit youtube-edit-form">
+                <input id="youtubeTitle" placeholder="표시할 노래 제목" />
+                <input id="youtubeArtist" placeholder="설명 / 가수" />
+                <input id="youtubeUrl" placeholder="유튜브 링크 붙여넣기" />
+                <button class="link-btn" type="button" onclick="saveYouTube()">유튜브 저장</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel card section" id="section-private">
+          <div class="card-title"><span class="serif">secret room</span><span class="small-label">private</span></div>
+          <div class="private-tabs">
+            <button class="tab-btn active" type="button" onclick="showPrivatePanel('chatbot', this)">Chat</button>
+            <button class="tab-btn" type="button" onclick="showPrivatePanel('talk', this)">Talk</button>
+            <button class="tab-btn" type="button" onclick="showPrivatePanel('diary', this)">Secret Diary</button>
+          </div>
+
+          <div class="private-panel active" id="private-chatbot">
+            <div class="card-title"><span class="serif">Solulu Chat</span><button class="clear-chat-btn" type="button" onclick="nyOpenClear('Chat'); return false;">clear</button></div>
+            <div class="form mode-only-edit bot-settings-form">
+
+              <div class="character-manager">
+                <div class="character-manager-head">
+                  <strong>Dream Character</strong>
+                  <p>기본은 소루루. 다른 드림 캐릭터를 추가하고 선택할 수 있어.</p>
+                </div>
+
+                <div class="character-select-row">
+                  <select id="characterSelect" onchange="selectDreamCharacter(this.value)"></select>
+                </div>
+
+                <div class="character-edit-grid">
+                  <input id="newCharacterName" placeholder="드림 캐릭터 이름" />
+                  <input id="newCharacterSource" placeholder="작품명 / 출처" />
+                  <input id="newCharacterImage" type="file" accept="image/*" />
+                  <textarea id="newCharacterMemo" placeholder="간단한 메모 / 캐해석 키워드"></textarea>
+                  <button class="link-btn full" type="button" onclick="saveDreamCharacter()">드림 캐릭터 추가</button>
+                </div>
+              </div>
+
+              <textarea id="botCharacter" placeholder="캐릭터 섹션: 소루루의 성격, 외형, 배경, 핵심 키워드"></textarea>
+              <textarea id="botSpeech" placeholder="말투 섹션: 반말/존댓말, 호칭, 어미, 말버릇, 금지 표현"></textarea>
+              <textarea id="botSamples" placeholder="대사 샘플: 인사, 따뜻한 순간, 곤란한 순간, 단호한 순간, 취약한 순간"></textarea>
+              <textarea id="botWorld" placeholder="세계관 지식 범위: 알고 있는 것 / 모르는 것 / 민감한 주제"></textarea>
+              <textarea id="botDream" placeholder="드림 모드: 드림주, 관계, 호칭, 분위기, 관계의 핵심 역학"></textarea>
+              <input class="api-url-input" id="botApiUrl" placeholder="API 서버 주소 /api/chat  ※ 키는 여기에 넣지 않기" />
+              <p class="api-note">API 키는 브라우저 HTML에 넣으면 노출돼요. 나중에 Cloudflare Worker/Netlify Function 같은 서버 주소만 여기에 연결하는 방식으로 만들면 돼요.</p>
+              <button class="link-btn" type="button" onclick="saveBotSettings()">소루루 설정 저장</button>
+            </div>
+            <div class="bot-mode-row">
+              <button class="tab-btn active" type="button" onclick="changeBotMode('chat', this)">채팅</button>
+              <button class="tab-btn" type="button" onclick="changeBotMode('basic', this)">베이직</button>
+              <button class="tab-btn" type="button" onclick="changeBotMode('dream', this)">드림</button>
+              <span class="bot-current-mode" id="botCurrentMode">현재: 채팅</span>
+            </div>
+            <div class="chat-card">
+              <div class="window-bar">
+                <span>solulu chat.exe</span>
+                <div class="window-dots"><span></span><span></span><span></span></div>
+              </div>
+              <div class="chat-body">
+                <div class="chat-character-line" id="chatCharacterLine">
+                  <span class="chat-character-icon" id="chatCharacterIcon">소</span>
+                  <span id="chatCharacterNameLabel">소루루</span>
+                </div>
+                <div class="char-tabs"><button class="active" type="button">소루루</button></div>
+                <div class="chat-box" id="chatBox"></div>
+                <div class="quick-row">
+                  <button type="button" onclick="quickSend('오늘은 조금 지쳤어.')">오늘은 조금 지쳤어</button>
+                  <button type="button" onclick="quickSend('나랑 잠깐 이야기해줄래?')">잠깐 이야기해줄래?</button>
+                  <button type="button" onclick="quickSend('보고 싶어서 왔어.')">보고 싶어서 왔어</button>
+                </div>
+                <div class="input-row">
+                  <input id="chatInput" placeholder="대사를 입력하거나 상황을 적어줘..." onkeydown="if(event.key==='Enter') sendChatMessage();" />
+                  <button class="send-btn" type="button" onclick="sendChatMessage()">➜</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="private-panel" id="private-talk">
+            <div class="card-title"><span class="serif">Talk</span><span class="small-label">message</span></div>
+
+            <div class="form mode-only-edit talk-settings-panel">
+              <div class="talk-settings-title">
+                <strong>Talk Character Setting</strong>
+                <p>Talk에서도 같은 드림 캐릭터를 선택하고, 톡 전용 캐해석을 따로 적을 수 있어.</p>
+              </div>
+
+              <div class="talk-character-select-row">
+                <select id="talkCharacterSelect" onchange="selectDreamCharacter(this.value)"></select>
+              </div>
+
+              <div class="talk-character-add-grid">
+                <input id="talkNewCharacterName" placeholder="드림 캐릭터 이름" />
+                <input id="talkNewCharacterSource" placeholder="작품명 / 출처" />
+                <input id="talkNewCharacterImage" type="file" accept="image/*" />
+                <textarea id="talkNewCharacterMemo" placeholder="간단한 메모 / 캐해석 키워드"></textarea>
+                <button class="link-btn full" type="button" onclick="saveDreamCharacterFromTalk()">Talk에서 드림 캐릭터 추가</button>
+              </div>
+
+              <textarea id="talkCharacterInterpretation" placeholder="Talk 전용 캐해석: 이 캐릭터가 톡에서는 어떤 말투인지, 답장 텀, 선톡 스타일, 짧은 문장 습관, 호칭 등을 적어줘."></textarea>
+              <textarea id="talkMoodSetting" placeholder="Talk 전용 분위기: 다정한 톡 / 장난스러운 톡 / 조용하고 짧은 톡 / 연인 같은 톡 등"></textarea>
+              <button class="link-btn" type="button" onclick="saveTalkSettings()">Talk 설정 저장</button>
+            </div>
+
+            <div class="talk-phone">
+              <div class="talk-header">
+                <div class="talk-avatar" id="talkAvatar">소</div>
+                <div>
+                  <div class="talk-name" id="talkCharacterName">소루루</div>
+                  <div class="talk-status">online</div>
+                </div>
+                <button class="talk-clear-btn" type="button" onclick="nyOpenClear('Talk'); return false;">clear</button>
+              </div>
+              <div class="talk-screen" id="talkScreen"></div>
+              <div class="talk-quick-row">
+                <button type="button" onclick="quickTalk('뭐해?')">뭐해?</button>
+                <button type="button" onclick="quickTalk('보고 싶어서 톡했어.')">보고 싶어서 톡했어</button>
+                <button type="button" onclick="quickTalk('오늘 좀 힘들었어.')">오늘 좀 힘들었어</button>
+              </div>
+              <div class="talk-input-row">
+                <input id="talkInput" placeholder="톡을 입력해줘..." onkeydown="if(event.key==='Enter') sendTalk();" />
+                <button type="button" onclick="sendTalk()">전송</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="private-panel" id="private-diary">
+            <div class="card-title"><span class="serif">Secret Diary</span><span class="small-label">private</span></div>
+            <div class="form two">
+              <input id="diaryTitle" placeholder="일기 제목" />
+              <input id="diaryDate" placeholder="날짜 입력 (예: 2026-05-06 / 5월 6일 / 10시)" />
+              <textarea class="full" id="diaryBody" placeholder="비밀일기를 자유롭게 적어줘..."></textarea>
+              <button class="link-btn full" type="button" onclick="saveDiary()">일기 저장</button>
+            </div>
+            <div class="entry-list" id="diaryList"></div>
+            <div class="secret-calendar-wrap">
+              <div class="calendar-card secret-calendar-card">
+                <div class="calendar-head">
+                  <button class="calendar-arrow" type="button" onclick="changeCalendarMonth(-1)">‹</button>
+                  <span class="calendar-year-label" id="calendarYearLabel">2026</span>
+                  <button class="calendar-arrow" type="button" onclick="changeCalendarMonth(1)">›</button>
+                </div>
+                <div class="calendar-month" id="calendarMonthLabel">May</div>
+                <div class="calendar-grid secret-calendar-grid" id="secretCalendarGrid"></div>
+                <p class="secret-calendar-note" id="secretCalendarNote">아직 일정이 없어요.</p>
+              </div>
+              <div class="todo-board">
+                <div class="todo-board-head">
+                  <div>
+                    <h4 class="serif" id="todoBoardTitle">To Do List</h4>
+                    <p id="todoBoardDate">아직 일정이 없어요.</p>
+                  </div>
+                  <button class="todo-add-btn" type="button" onclick="addTodoForSelectedDate()">＋</button>
+                </div>
+                <div class="todo-list" id="todoListPanel">
+                  <div class="todo-empty">아직 일정이 없어요.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="lock-backdrop ny-modal" id="nyEditGate" style="display:none;">
+    <div class="lock-box ny-lock-box">
+      <div class="entry-halo ny-small-halo"></div>
+      <h3 class="serif">edit mode</h3>
+      <p>편집모드로 들어가려면 비밀번호를 입력해줘.</p>
+      <input id="nyEditPassword" type="password" placeholder="password" />
+      <div class="lock-actions">
+        <button class="link-btn" type="button" onclick="nyCloseModal('nyEditGate')">닫기</button>
+        <button class="link-btn" type="button" onclick="nyConfirmEdit()">입장</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="lock-backdrop ny-modal" id="nyClearGate" style="display:none;">
+    <div class="lock-box ny-lock-box">
+      <div class="entry-halo ny-small-halo"></div>
+      <h3 class="serif" id="nyClearTitle">clear</h3>
+      <p id="nyClearText">대화 내용을 삭제하려면 비밀번호를 입력해줘.</p>
+      <input id="nyClearPassword" type="password" placeholder="password" />
+      <div class="lock-actions">
+        <button class="link-btn" type="button" onclick="nyCloseModal('nyClearGate')">닫기</button>
+        <button class="link-btn" type="button" onclick="nyConfirmClear()">삭제</button>
+      </div>
+    </div>
+  </div>
+
+<div class="lock-backdrop" id="gate">
+    <div class="lock-box">
+      <h3 class="serif">secret room</h3>
+      <p>password</p>
+      <input id="passwordInput" type="password" placeholder="password" onkeydown="if(event.key==='Enter') enterPrivate();" />
+      <div class="lock-actions">
+        <button class="link-btn" type="button" onclick="closeGate()">닫기</button>
+        <button class="link-btn" type="button" onclick="enterPrivate()">입장</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mode-toast" id="modeToast">지금부터 드림모드가 적용됩니다.</div>
+
+
+  <script>
+    const PASSWORD = "ribbon";
+    let isPlaying = false;
+
+    const solulu = {
+      firstMessage: "안녕. 오늘은 어떤 이야기를 들려줄 거야?",
+      sampleReply: "응, 천천히 말해줘. 네가 편하게 이야기할 수 있도록 여기 있을게.",
+      quick: [
+        "오늘의 네 마음이 어떤 색인지 궁금해.",
+        "괜찮아. 지금은 서두르지 않아도 돼.",
+        "네 이야기를 조금 더 들려줄래?"
+      ]
+    };
+
+    let messages = [
+      { role: "bot", text: solulu.firstMessage },
+      { role: "user", text: "소루루, 오늘은 조금 지쳤어." },
+      { role: "bot", text: solulu.sampleReply }
+    ];
+    let chatIsTyping = false;
+    let chatReplyTimer = null;
+
+    function $(id) { return document.getElementById(id); }
+
+    function escapeHtml(text) {
+      return String(text || "").replace(/[&<>"']/g, m => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[m]));
+    }
+
+    function readFileAsDataURL(file) {
+      return new Promise(resolve => {
+        if (!file) return resolve("");
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function enterSite() {
+      var entry=document.getElementById('entryScreen');var site=document.getElementById('site');if(entry){entry.classList.add('hidden');setTimeout(function(){entry.style.display='none';},850);}if(site){site.style.display='block';}if(typeof renderHomeCalendar==='function'){renderHomeCalendar();}if(typeof renderScheduleCalendar==='function'){renderScheduleCalendar();}if(typeof renderTodoPanel==='function'){renderTodoPanel();}
+    }
+
+    function setMode(mode) {
+      document.body.classList.toggle("edit-mode", mode === "edit");
+      $("viewerBtn").classList.toggle("active", mode === "viewer");
+      $("editBtn").classList.toggle("active", mode === "edit");
+    }
+
+
+    function requestEditMode() {
+      const value = prompt("편집모드 비밀번호를 입력해줘.");
+      if (value === null) return;
+      if (value === PASSWORD) {
+        setMode("edit");
+      } else {
+        alert("비밀번호가 달라!");
+      }
+    }
+
+
+    function showSection(id, btn) {
+      document.querySelectorAll(".section").forEach(section => section.classList.remove("active"));
+      $("section-" + id).classList.add("active");
+      document.querySelectorAll(".nav-list button").forEach(button => button.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+    }
+
+    function openGate() {
+      $("gate").classList.add("open");
+      setTimeout(() => $("passwordInput").focus(), 50);
+    }
+
+    function closeGate() {
+      $("gate").classList.remove("open");
+      $("passwordInput").value = "";
+    }
+
+    function enterPrivate() {
+      if ($("passwordInput").value.trim() === PASSWORD) {
+        closeGate();
+        document.querySelectorAll(".section").forEach(section => section.classList.remove("active"));
+        $("section-private").classList.add("active");
+        document.querySelectorAll(".nav-list button").forEach(button => button.classList.remove("active"));
+      } else {
+        alert("비밀번호가 달라!");
+      }
+    }
+
+    function showPrivatePanel(id, btn) {
+      document.querySelectorAll(".private-panel").forEach(panel => panel.classList.remove("active"));
+      $("private-" + id).classList.add("active");
+      document.querySelectorAll(".private-tabs button").forEach(button => button.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      if (id === "talk") renderTalk();
+    }
+
+    function getHomeData() {
+      return JSON.parse(localStorage.getItem("shellHomeData") || "{}");
+    }
+
+    async function saveHome() {
+      const data = getHomeData();
+      data.title = $("editHomeProfileTitle").value.trim() || data.title || "llem";
+      data.text = $("editHomeProfileText").value.trim() || data.text || "𓈒𓏸 𓆩♡𓆪 𓂃 ˚₊‧꒰ა ♡ ໒꒱‧₊˚ 𓂃 𓆩♡𓆪 𓏸𓈒";
+      const file = $("profileImageInput").files[0];
+      const image = await readFileAsDataURL(file);
+      if (image) data.image = image;
+      localStorage.setItem("shellHomeData", JSON.stringify(data));
+      $("profileImageInput").value = "";
+      renderHome();
+    }
+
+    function renderHome() {
+      const data = getHomeData();
+      $("homeProfileTitle").textContent = data.title || "llem";
+      $("homeProfileText").textContent = data.text || "𓈒𓏸 𓆩♡𓆪 𓂃 ˚₊‧꒰ა ♡ ໒꒱‧₊˚ 𓂃 𓆩♡𓆪 𓏸𓈒";
+      $("editHomeProfileTitle").value = data.title || "";
+      $("editHomeProfileText").value = data.text || "";
+      if (data.image) {
+        $("profileImageBox").innerHTML = `<img src="${data.image}" alt="">`;
+      }
+    }
+
+    
+    function applyPickedOCColor() {
+      const picker = $("ocColorPicker");
+      const hex = $("ocColorHex");
+      if (!picker || !hex) return;
+      hex.value = picker.value;
+    }
+
+    function resetOCForm() {
+      ["ocName","ocKeyword","ocDesc","ocColorHex"].forEach(id => {
+        if ($(id)) $(id).value = "";
+      });
+      if ($("ocColorPicker")) $("ocColorPicker").value = "#9ee7ef";
+      if ($("ocImageFile")) $("ocImageFile").value = "";
+      if ($("ocEditIndex")) $("ocEditIndex").value = "-1";
+    }
+
+    function cancelOCEdit() {
+      resetOCForm();
+    }
+
+    async function saveOC() {
+      const name = $("ocName").value.trim();
+      const keyword = $("ocKeyword").value.trim();
+      const desc = $("ocDesc").value.trim();
+      const colorText = $("ocColorHex").value.trim();
+      const pickerColor = $("ocColorPicker").value || "#9ee7ef";
+      const color = colorText || pickerColor;
+      const editIndex = parseInt($("ocEditIndex") ? $("ocEditIndex").value : "-1", 10);
+      const image = await readFileAsDataURL($("ocImageFile").files[0]);
+
+      const ocs = JSON.parse(localStorage.getItem("shellOCs") || "[]");
+
+      if (editIndex >= 0 && ocs[editIndex]) {
+        const prev = ocs[editIndex];
+        ocs[editIndex] = {
+          ...prev,
+          name: name || prev.name || "이름 없는 OC",
+          keyword: keyword || "",
+          color: color || prev.color || "#9ee7ef",
+          desc: desc || "",
+          image: image || prev.image || ""
+        };
+      } else {
+        if (!name && !keyword && !desc && !image) return;
+        ocs.unshift({
+          name: name || "이름 없는 OC",
+          keyword: keyword || "",
+          color: color || "#9ee7ef",
+          desc: desc || "",
+          image: image || ""
+        });
+      }
+
+      localStorage.setItem("shellOCs", JSON.stringify(ocs));
+      resetOCForm();
+      renderOCs();
+    }
+
+    function editOC(index) {
+      const ocs = JSON.parse(localStorage.getItem("shellOCs") || "[]");
+      const oc = ocs[index];
+      if (!oc) return;
+
+      if ($("ocEditIndex")) $("ocEditIndex").value = String(index);
+      if ($("ocName")) $("ocName").value = oc.name || "";
+      if ($("ocKeyword")) $("ocKeyword").value = oc.keyword || "";
+      if ($("ocDesc")) $("ocDesc").value = oc.desc || "";
+      if ($("ocColorHex")) $("ocColorHex").value = oc.color || "#9ee7ef";
+      if ($("ocColorPicker")) $("ocColorPicker").value = /^#[0-9a-fA-F]{6}$/.test(oc.color || "") ? oc.color : "#9ee7ef";
+
+      document.body.classList.add("edit-mode");
+      const viewer = $("viewerBtn");
+      const edit = $("editBtn");
+      if (viewer) viewer.classList.remove("active");
+      if (edit) edit.classList.add("active");
+
+      $("section-oc").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function deleteOC(index) {
+      const ocs = JSON.parse(localStorage.getItem("shellOCs") || "[]");
+      if (!ocs[index]) return;
+      if (!confirm("이 OC를 삭제할까?")) return;
+      ocs.splice(index, 1);
+      localStorage.setItem("shellOCs", JSON.stringify(ocs));
+      resetOCForm();
+      renderOCs();
+    }
+
+    function renderOCs() {
+      const grid = $("ocGrid");
+      const ocs = JSON.parse(localStorage.getItem("shellOCs") || "[]");
+      if (ocs.length === 0) {
+        grid.innerHTML = `<div class="oc-card large"><div class="oc-card-image-large">대표이미지가 아직 없어요.</div><div class="oc-card-body"><h4 class="serif">OC Closet</h4><p class="oc-card-desc">아직 OC가 없어요.</p></div></div>`;
+        return;
+      }
+      grid.innerHTML = "";
+      ocs.forEach((oc, index) => {
+        const accent = oc.color || '#9ee7ef';
+        const card = document.createElement("div");
+        card.className = "oc-card large";
+        card.style.borderColor = accent + '55';
+        card.style.boxShadow = `0 16px 40px ${accent}22`;
+        card.innerHTML = `
+          <div class="oc-card-image-large">${oc.image ? `<img src="${oc.image}" alt="">` : '대표이미지가 아직 없어요.'}</div>
+          <div class="oc-card-body">
+            <h4 class="serif">${escapeHtml(oc.name)}</h4>
+            ${oc.keyword ? `<div class="oc-pill" style="background:${accent};">${escapeHtml(oc.keyword)}</div>` : ''}
+            <p class="oc-card-desc">${escapeHtml(oc.desc || '소개글이 아직 없어요.')}</p>
+            <div class="oc-meta-row">
+              <span class="tag">${escapeHtml(accent)}</span>
+              <span class="oc-color-chip" style="background:${accent};" title="${escapeHtml(accent)}"></span>
+            </div>
+            <div class="oc-action-row mode-only-edit">
+              <button class="oc-action-btn" type="button" onclick="editOC(${index})">수정</button>
+              <button class="oc-action-btn delete" type="button" onclick="deleteOC(${index})">삭제</button>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+
+    function extractYouTubeId(url) {
+      const text = String(url || "").trim();
+      if (!text) return "";
+      const patterns = [
+        /youtu\.be\/([a-zA-Z0-9_-]{6,})/,
+        /youtube\.com\/watch\?[^#]*v=([a-zA-Z0-9_-]{6,})/,
+        /youtube\.com\/embed\/([a-zA-Z0-9_-]{6,})/,
+        /youtube\.com\/shorts\/([a-zA-Z0-9_-]{6,})/,
+        /youtube\.com\/live\/([a-zA-Z0-9_-]{6,})/
+      ];
+      for (const pattern of patterns) {
+        const match = text.match(pattern);
+        if (match) return match[1];
+      }
+      if (/^[a-zA-Z0-9_-]{6,}$/.test(text)) return text;
+      return "";
+    }
+
+    function getYouTubeData() {
+      return JSON.parse(localStorage.getItem("shellYouTube") || "{}");
+    }
+
+    function saveYouTube() {
+      const title = $("youtubeTitle").value.trim();
+      const artist = $("youtubeArtist").value.trim();
+      const url = $("youtubeUrl").value.trim();
+      const id = extractYouTubeId(url);
+      if (!id) {
+        alert("유튜브 링크를 확인해줘!");
+        return;
+      }
+      const data = {
+        id,
+        title: title || "저장된 음악",
+        artist: artist || "",
+        url
+      };
+      localStorage.setItem("shellYouTube", JSON.stringify(data));
+      renderYouTube();
+      startYouTube();
+    }
+
+    function renderYouTube() {
+      const data = getYouTubeData();
+      $("musicTitle").textContent = data.title || "아직 저장된 음악이 없어요.";
+      $("musicArtist").textContent = data.artist || "";
+      if ($("youtubeTitle")) $("youtubeTitle").value = data.title || "";
+      if ($("youtubeArtist")) $("youtubeArtist").value = data.artist || "";
+      if ($("youtubeUrl")) $("youtubeUrl").value = data.url || "";
+
+      $("playButton").textContent = isPlaying ? "⏸" : "▶";
+      $("musicProgress").style.width = isPlaying ? "68%" : "38%";
+
+      const help = $("musicHelp");
+      if (help) {
+        help.textContent = "";
+      }
+
+      const box = $("youtubePlayerBox");
+      if (box) box.classList.toggle("active", !!data.id && isPlaying);
+    }
+
+    function buildYouTubeSrc(id, autoplay = true) {
+      const params = new URLSearchParams({
+        autoplay: autoplay ? "1" : "0",
+        loop: "1",
+        playlist: id,
+        controls: "1",
+        modestbranding: "1",
+        rel: "0",
+        playsinline: "1",
+        enablejsapi: "1",
+        origin: window.location.origin
+      });
+      return "https://www.youtube.com/embed/" + id + "?" + params.toString();
+    }
+
+    function startYouTube() {
+      const data = getYouTubeData();
+      if (!data.id) {
+        isPlaying = false;
+        renderYouTube();
+        return;
+      }
+      const frame = $("youtubeFrame");
+      if (!frame) return;
+      frame.src = buildYouTubeSrc(data.id, true);
+      isPlaying = true;
+      renderYouTube();
+    }
+
+    function stopYouTube() {
+      const frame = $("youtubeFrame");
+      if (frame) frame.src = "";
+      isPlaying = false;
+      renderYouTube();
+    }
+
+    function restartYouTube() {
+      const data = getYouTubeData();
+      if (!data.id) {
+        alert("먼저 편집모드에서 유튜브 링크를 저장해줘.");
+        return;
+      }
+      stopYouTube();
+      setTimeout(startYouTube, 180);
+    }
+
+    function toggleYouTube() {
+      const data = getYouTubeData();
+      if (!data.id) {
+        alert("먼저 편집모드에서 유튜브 링크를 저장해줘.");
+        return;
+      }
+      if (isPlaying) stopYouTube();
+      else startYouTube();
+    }
+
+
+
+    function showModeToast(text) {
+      const toast = $("modeToast");
+      if (!toast) return;
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(window.__modeToastTimer);
+      window.__modeToastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 500);
+    }
+
+
+    function changeBotMode(mode, button) {
+      botMode = mode;
+
+      document.querySelectorAll(".bot-mode-row .tab-btn").forEach(btn => {
+        btn.classList.remove("active");
+      });
+      if (button) button.classList.add("active");
+
+      const visibleLabels = {
+        chat: "현재: 채팅",
+        basic: "현재: 베이직",
+        dream: "현재: 드림"
+      };
+      const toastLabels = {
+        chat: "지금부터 채팅모드가 적용됩니다.",
+        basic: "지금부터 베이직모드가 적용됩니다.",
+        dream: "지금부터 드림모드가 적용됩니다."
+      };
+
+      const label = document.getElementById("botCurrentMode");
+      if (label) label.textContent = visibleLabels[mode] || "현재: 채팅";
+
+      if (typeof showModeToast === "function") {
+        showModeToast(toastLabels[mode] || "지금부터 채팅모드가 적용됩니다.");
+      }
+    }
+
+    function safeSetBotMode(mode, button) {
+      changeBotMode(mode, button);
+    }
+
+    function setBotMode(mode, button) {
+      changeBotMode(mode, button);
+    }
+
+
+
+    function askClearPassword(label) {
+      const value = prompt(label + " 내용을 삭제하려면 비밀번호를 입력해줘.");
+      if (value === null) return false;
+      if (value !== PASSWORD) {
+        alert("비밀번호가 달라!");
+        return false;
+      }
+      return confirm(label + " 내용을 전부 삭제할까?");
+    }
+
+    function requestClearChat() {
+      if (!askClearPassword("Chat")) return;
+      if (typeof chatReplyTimer !== "undefined") clearTimeout(chatReplyTimer);
+      if (typeof chatIsTyping !== "undefined") chatIsTyping = false;
+      if (typeof messages !== "undefined") messages = [];
+      [
+        "dreamCharacterChatMessages",
+        "dreamCharacterChatMessagesV2",
+        "dreamCharacterChatMessagesV3",
+        "soluluChatMessages"
+      ].forEach(key => localStorage.removeItem(key));
+      if ($("chatInput")) $("chatInput").disabled = false;
+      if (typeof renderMessages === "function") renderMessages();
+    }
+
+    function requestClearTalk() {
+      if (!askClearPassword("Talk")) return;
+      if (typeof talkReplyTimer !== "undefined") clearTimeout(talkReplyTimer);
+      if (typeof talkIsTyping !== "undefined") talkIsTyping = false;
+      if (typeof talkMessages !== "undefined") talkMessages = [];
+      [
+        "soluluTalkMessages",
+        "soluluTalkMessagesV2",
+        "soluluTalkMessagesStable",
+        "dreamCharacterTalkMessages",
+        "dreamCharacterTalkMessagesV3"
+      ].forEach(key => localStorage.removeItem(key));
+      if ($("talkInput")) $("talkInput").disabled = false;
+      if (typeof renderTalk === "function") renderTalk();
+    }
+
+
+
+    function getDefaultDreamCharacters() {
+      return [{
+        id: "solulu",
+        name: "소루루",
+        source: "프리채널",
+        memo: "기본 드림 캐릭터",
+        image: ""
+      }];
+    }
+
+    function getDreamCharacters() {
+      const saved = JSON.parse(localStorage.getItem("dreamCharactersList") || "null");
+      if (Array.isArray(saved) && saved.length) {
+        if (!saved.some(char => char.id === "solulu")) saved.unshift(getDefaultDreamCharacters()[0]);
+        return saved;
+      }
+      return getDefaultDreamCharacters();
+    }
+
+    function saveDreamCharacters(list) {
+      localStorage.setItem("dreamCharactersList", JSON.stringify(list));
+    }
+
+    function getActiveCharacterId() {
+      return localStorage.getItem("activeDreamCharacterId") || "solulu";
+    }
+
+    function getActiveCharacter() {
+      const chars = getDreamCharacters();
+      return chars.find(char => char.id === getActiveCharacterId()) || chars[0] || getDefaultDreamCharacters()[0];
+    }
+
+    function getCharacterName() {
+      return getActiveCharacter().name || "소루루";
+    }
+
+    function getCharacterInitial() {
+      const name = getCharacterName();
+      return name ? name.slice(0, 1) : "소";
+    }
+
+    function getCharacterImage() {
+      return getActiveCharacter().image || "";
+    }
+
+    function makeCharacterIconHTML() {
+      const image = getCharacterImage();
+      if (image) return `<img src="${image}" alt="">`;
+      return escapeHtml(getCharacterInitial());
+    }
+
+    function renderDreamCharacterSelect() {
+      const chars = getDreamCharacters();
+      const active = getActiveCharacterId();
+
+      ["characterSelect", "talkCharacterSelect"].forEach(selectId => {
+        const select = $(selectId);
+        if (!select) return;
+        select.innerHTML = "";
+        chars.forEach(char => {
+          const option = document.createElement("option");
+          option.value = char.id;
+          option.textContent = char.name + (char.source ? " · " + char.source : "");
+          option.selected = char.id === active;
+          select.appendChild(option);
+        });
+      });
+    }
+
+    function renderCharacterLabels() {
+      const name = getCharacterName();
+      const iconHTML = makeCharacterIconHTML();
+
+      if ($("talkCharacterName")) $("talkCharacterName").textContent = name;
+      if ($("talkAvatar")) $("talkAvatar").innerHTML = iconHTML;
+      if ($("chatCharacterNameLabel")) $("chatCharacterNameLabel").textContent = name;
+      if ($("chatCharacterIcon")) $("chatCharacterIcon").innerHTML = iconHTML;
+
+      document.querySelectorAll(".mini-avatar").forEach(el => {
+        el.innerHTML = iconHTML;
+      });
+    }
+
+    function selectDreamCharacter(id) {
+      localStorage.setItem("activeDreamCharacterId", id);
+      renderDreamCharacterSelect();
+      renderCharacterLabels();
+    renderTalkSettings();
+      if (typeof renderMessages === "function") renderMessages();
+      if (typeof renderTalk === "function") renderTalk();
+    }
+
+    async function saveDreamCharacter() {
+      const name = $("newCharacterName").value.trim();
+      const source = $("newCharacterSource").value.trim();
+      const memo = $("newCharacterMemo").value.trim();
+      const file = $("newCharacterImage").files[0];
+
+      if (!name) {
+        alert("드림 캐릭터 이름을 적어줘.");
+        return;
+      }
+
+      const image = await readFileAsDataURL(file);
+      const id = "char_" + Date.now();
+      const chars = getDreamCharacters();
+      chars.push({ id, name, source, memo, image });
+      saveDreamCharacters(chars);
+      localStorage.setItem("activeDreamCharacterId", id);
+
+      ["newCharacterName","newCharacterSource","newCharacterMemo"].forEach(inputId => $(inputId).value = "");
+      $("newCharacterImage").value = "";
+
+      renderDreamCharacterSelect();
+      renderCharacterLabels();
+      alert("드림 캐릭터를 추가했어.");
+    }
+
+
+
+    function nyChatWasCleared() {
+      return localStorage.getItem("nyChatCleared") === "yes";
+    }
+
+    function nyMarkChatCleared() {
+      localStorage.setItem("nyChatCleared", "yes");
+      [
+        "nyDreamChatMessages",
+        "dreamCharacterChatMessages",
+        "dreamCharacterChatMessagesV2",
+        "dreamCharacterChatMessagesV3",
+        "soluluChatMessages"
+      ].forEach(key => localStorage.removeItem(key));
+    }
+
+    function nySaveCurrentChatIfPossible() {
+      try {
+        if (typeof messages !== "undefined") {
+          localStorage.setItem("nyDreamChatMessages", JSON.stringify(messages));
+          localStorage.removeItem("nyChatCleared");
+        }
+      } catch (e) {}
+    }
+
+    function nyApplyChatClearFlag() {
+      try {
+        if (nyChatWasCleared() && typeof messages !== "undefined") {
+          messages.length = 0;
+        }
+      } catch (e) {}
+    }
+
+    function nyTodoItemsOnly(entries) {
+      return (entries || []).filter(item => item && item.dateKey && !String(item.body || "").trim());
+    }
+
+
+    function renderMessages() {
+      nyApplyChatClearFlag();
+      const box = $("chatBox");
+      if (!box) return;
+      box.innerHTML = "";
+      if (messages.length === 0 && !chatIsTyping) {
+        const empty = document.createElement("div");
+        empty.className = "chat-empty";
+        empty.textContent = "아직 주고받은 대화가 없어요.";
+        box.appendChild(empty);
+      }
+
+      messages.forEach(msg => {
+        const row = document.createElement("div");
+        row.className = "msg-row " + (msg.role === "user" ? "user" : "bot");
+        if (msg.role === "bot") {
+          const av = document.createElement("div");
+          av.className = "mini-avatar";
+          av.innerHTML = makeCharacterIconHTML();
+          row.appendChild(av);
+        }
+        const bubble = document.createElement("div");
+        bubble.className = "bubble " + (msg.role === "user" ? "user-bubble" : "bot-bubble");
+        bubble.textContent = msg.text;
+        row.appendChild(bubble);
+        box.appendChild(row);
+      });
+
+      if (chatIsTyping) {
+        const row = document.createElement("div");
+        row.className = "chat-typing-row";
+        row.innerHTML = `
+          <div class="mini-avatar">소</div>
+          <div class="chat-typing-bubble">
+            <span class="chat-typing-dot"></span>
+            <span class="chat-typing-dot"></span>
+            <span class="chat-typing-dot"></span>
+          </div>
+        `;
+        box.appendChild(row);
+      }
+
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function pickReply(text) {
+      if (text.includes("지쳤") || text.includes("힘들") || text.includes("우울")) return solulu.sampleReply;
+      if (text.includes("보고") || text.includes("좋아") || text.includes("그리")) return solulu.quick[2];
+      if (text.includes("이야기") || text.includes("말")) return solulu.quick[0];
+      return solulu.quick[Math.floor(Math.random() * solulu.quick.length)];
+    }
+
+    function buildSoluluSystemPrompt() {
+      const settings = getBotSettings ? getBotSettings() : {};
+      const modeGuide = {
+        chat: "현재 모드는 채팅 모드다. 일상 대화처럼 자연스럽고 짧게 응답한다.",
+        basic: "현재 모드는 베이직 모드다. 드림 관계를 과하게 밀지 말고, 원작 캐릭터성/말투/세계관을 우선한다.",
+        dream: "현재 모드는 드림 모드다. 드림주와의 관계성, 호칭, 거리감, 감정선을 우선하되 과장하지 않는다."
+      };
+
+      return [
+        "너는 현재 선택된 드림 캐릭터 역할로 대화한다. 기본 캐릭터는 소루루다.",
+        "사용자가 입력한 캐릭터 해석과 말투 설정을 최우선으로 따른다.",
+        "대답은 소루루가 직접 말하는 것처럼 작성한다. 메타발언, 시스템 설명, 'AI'라는 말은 하지 않는다.",
+        "사용자가 모드를 바꿨다는 사실을 캐릭터가 말풍선 안에서 직접 언급하지 않는다.",
+        modeGuide[botMode] || modeGuide.chat,
+        "",
+        "[캐릭터 설정]",
+        settings.character || "(아직 상세 캐릭터 설정 없음)",
+        "",
+        "[말투 설정]",
+        settings.speech || "(아직 말투 설정 없음)",
+        "",
+        "[대사 샘플]",
+        settings.samples || "(아직 대사 샘플 없음)",
+        "",
+        "[세계관 지식 범위]",
+        settings.world || "(아직 세계관 지식 범위 없음)",
+        "",
+        "[드림 모드 설정]",
+        settings.dream || "(아직 드림 모드 설정 없음)"
+      ].join("\n");
+    }
+
+    async function callChatApi(userText) {
+      const settings = getBotSettings ? getBotSettings() : {};
+      if (!settings.apiUrl) return null;
+
+      const payload = {
+        mode: botMode,
+        character: getCharacterName(),
+        systemPrompt: buildSoluluSystemPrompt(),
+        messages: messages.map(m => ({
+          role: m.role === "user" ? "user" : "assistant",
+          content: m.text
+        })),
+        userMessage: userText
+      };
+
+      const response = await fetch(settings.apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("API response error");
+      const data = await response.json();
+      return data.reply || data.text || data.message || null;
+    }
+
+    async function sendChatMessage() {
+      const input = $("chatInput");
+      if (!input) return;
+      const text = input.value.trim();
+      if (!text || chatIsTyping) return;
+
+      messages.push({ role: "user", text });
+      nySaveCurrentChatIfPossible();
+      input.value = "";
+
+      chatIsTyping = true;
+      input.disabled = true;
+      renderMessages();
+
+      try {
+        let reply = await callChatApi(text);
+        if (!reply) {
+          const delay = Math.min(1600, Math.max(500, 360 + text.length * 25));
+          await new Promise(resolve => setTimeout(resolve, delay));
+          reply = makeSoluluReply(text);
+        }
+        messages.push({ role: "bot", text: reply });
+        nySaveCurrentChatIfPossible();
+      } catch (error) {
+        messages.push({ role: "bot", text: "잠깐 연결이 흔들린 것 같아. 다시 한 번 말해줄래?" });
+        nySaveCurrentChatIfPossible();
+      } finally {
+        chatIsTyping = false;
+        if ($("chatInput")) $("chatInput").disabled = false;
+        renderMessages();
+      }
+    }
+
+    function sendMessage() {
+      sendChatMessage();
+    }
+
+    function quickSend(text) {
+      $("chatInput").value = text;
+      sendChatMessage();
+    }
+
+    function getTodayKey() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+    }
+
+    function normalizeDateKey(input) {
+      const text = String(input || "").trim();
+      if (!text) return "";
+      let match = text.match(/(20\d{2})[.\-/ ]\s*(\d{1,2})[.\-/ ]\s*(\d{1,2})/);
+      if (match) {
+        const y = match[1];
+        const m = String(match[2]).padStart(2, "0");
+        const d = String(match[3]).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+      }
+      match = text.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일/);
+      if (match) {
+        const now = new Date();
+        const y = String(now.getFullYear());
+        const m = String(match[1]).padStart(2, "0");
+        const d = String(match[2]).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+      }
+      match = text.match(/(\d{1,2})[.\-/ ]\s*(\d{1,2})/);
+      if (match) {
+        const now = new Date();
+        const y = String(now.getFullYear());
+        const m = String(match[1]).padStart(2, "0");
+        const d = String(match[2]).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+      }
+      return "";
+    }
+
+    let calendarDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    let selectedDateKey = getTodayKey();
+    let homeCalendarDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    let botMode = 'chat';
+
+    function getDiaryEntries() {
+      return JSON.parse(localStorage.getItem("shellDiary") || "[]");
+    }
+
+    function saveDiary() {
+      const title = $("diaryTitle").value.trim();
+      const date = $("diaryDate").value.trim();
+      const body = $("diaryBody").value.trim();
+      if (!title && !body) return;
+
+      const entries = getDiaryEntries();
+      const dateKey = normalizeDateKey(date) || selectedDateKey;
+      entries.unshift({ title: title || "제목 없는 일정", date: date || dateKey, dateKey, body, done: false });
+      localStorage.setItem("shellDiary", JSON.stringify(entries));
+
+      ["diaryTitle","diaryDate","diaryBody"].forEach(id => $(id).value = "");
+      selectedDateKey = dateKey;
+      renderDiary();
+      renderScheduleCalendar();
+      renderHomeCalendar();
+      renderTodoPanel();
+    }
+
+
+    function addTodoForSelectedDate() {
+      const text = prompt("추가할 일정을 적어줘.");
+      if (!text || !text.trim()) return;
+
+      const entries = getDiaryEntries();
+      entries.unshift({
+        title: text.trim(),
+        date: selectedDateKey,
+        dateKey: selectedDateKey,
+        body: "",
+        type: "todo",
+        done: false
+      });
+      localStorage.setItem("shellDiary", JSON.stringify(entries));
+      renderDiary();
+      renderScheduleCalendar();
+      renderHomeCalendar();
+      renderTodoPanel();
+    }
+
+    function toggleDiaryDone(index) {
+      const entries = getDiaryEntries();
+      if (!entries[index]) return;
+      entries[index].done = !entries[index].done;
+      localStorage.setItem("shellDiary", JSON.stringify(entries));
+      renderDiary();
+      renderTodoPanel();
+      renderScheduleCalendar();
+      renderHomeCalendar();
+    }
+
+
+    function deleteTodo(index) {
+      const entries = getDiaryEntries();
+      if (!entries[index]) return;
+      if (!confirm("이 일정을 삭제할까?")) return;
+      entries.splice(index, 1);
+      localStorage.setItem("shellDiary", JSON.stringify(entries));
+      renderDiary();
+      renderScheduleCalendar();
+      renderHomeCalendar();
+      renderTodoPanel();
+    }
+
+
+    function deleteDiary(index) {
+      const entries = getDiaryEntries();
+      if (!entries[index]) return;
+      if (!confirm("이 일기를 삭제할까?")) return;
+      entries.splice(index, 1);
+
+      // 저장소 이름이 버전마다 다를 수 있어서 현재 함수/기존 저장소 양쪽에 안전 저장
+      if (typeof saveDiaryEntries === "function") {
+        saveDiaryEntries(entries);
+      } else {
+        localStorage.setItem("shellDiary", JSON.stringify(entries));
+      }
+
+      renderDiary();
+    }
+
+
+    function renderDiary() {
+      const list = $("diaryList");
+      if (!list) return;
+      const diaries = getDiaryEntries();
+      if (diaries.length === 0) {
+        list.innerHTML = `<div class="entry"><h4 class="serif">Secret Diary</h4><p>아직 비밀일기가 없어요.</p></div>`;
+        return;
+      }
+      list.innerHTML = "";
+      diaries.forEach((diary, index) => {
+        const card = document.createElement("div");
+        card.className = "entry";
+        card.innerHTML = `
+          <h4 class="serif">${escapeHtml(diary.title)}</h4>
+          <p>${escapeHtml(diary.body || "")}</p>
+          <div class="tag-row">
+            <span class="tag">${escapeHtml(diary.date || "")}</span>
+            <button class="diary-delete-btn" type="button" onclick="deleteDiary(${index})">delete</button>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function getEntriesForDate(dateKey) {
+      return getDiaryEntries()
+        .map((entry, index) => ({...entry, index}))
+        .filter(entry => entry.dateKey === dateKey && !String(entry.body || "").trim());
+    }
+
+    function getShellIcon() {
+      return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20c-3.8 0-7.4-1.5-10-4.1 1.3-.8 2.6-1.5 4-2 .6-4 3-7.2 6-8.9 3 1.7 5.4 4.9 6 8.9 1.4.5 2.7 1.2 4 2C19.4 18.5 15.8 20 12 20zm0-11.6c-1.9 1.3-3.4 3.4-4 6 .7-.1 1.3-.2 2-.2h4c.7 0 1.3.1 2 .2-.6-2.6-2.1-4.7-4-6z"/></svg>`;
+    }
+
+    function renderScheduleCalendar() {
+      const grid = $("secretCalendarGrid");
+      const note = $("secretCalendarNote");
+      if (!grid) return;
+
+      const year = calendarDate.getFullYear();
+      const month = calendarDate.getMonth();
+      $("calendarYearLabel").textContent = year;
+      $("calendarMonthLabel").textContent = new Date(year, month, 1).toLocaleString("en-US", { month: "long" });
+
+      const firstDay = new Date(year, month, 1);
+      const startWeekday = firstDay.getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const prevDays = new Date(year, month, 0).getDate();
+      const allEntries = nyTodoItemsOnly(getDiaryEntries());
+      const countFor = key => allEntries.filter(entry => entry.dateKey === key).length;
+
+      grid.innerHTML = "";
+
+      ["일","월","화","수","목","금","토"].forEach(day => {
+        const el = document.createElement("div");
+        el.className = "calendar-weekday";
+        el.textContent = day;
+        grid.appendChild(el);
+      });
+
+      const todayKey = getTodayKey();
+      const cells = 42;
+
+      for (let i = 0; i < cells; i++) {
+        let dayNum;
+        let cellMonth = month;
+        let cellYear = year;
+        let other = false;
+
+        if (i < startWeekday) {
+          dayNum = prevDays - startWeekday + i + 1;
+          cellMonth = month - 1;
+          if (cellMonth < 0) {
+            cellMonth = 11;
+            cellYear -= 1;
+          }
+          other = true;
+        } else if (i >= startWeekday + daysInMonth) {
+          dayNum = i - (startWeekday + daysInMonth) + 1;
+          cellMonth = month + 1;
+          if (cellMonth > 11) {
+            cellMonth = 0;
+            cellYear += 1;
+          }
+          other = true;
+        } else {
+          dayNum = i - startWeekday + 1;
+        }
+
+        const key = `${cellYear}-${String(cellMonth + 1).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+        const count = countFor(key);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className =
+          "calendar-day" +
+          (other ? " other-month" : "") +
+          (key === todayKey ? " today" : "") +
+          (key === selectedDateKey ? " selected" : "");
+
+        const icons = count > 0
+          ? `<div class="shell-indicators">${Array.from({ length: Math.min(count, 3) }).map(() => getShellIcon()).join("")}${count > 3 ? `<span class="shell-more">+${count - 3}</span>` : ""}</div>`
+          : `<div class="shell-indicators"></div>`;
+
+        btn.innerHTML = `<span class="day-number">${dayNum}</span>${icons}`;
+        btn.onclick = () => {
+          selectedDateKey = key;
+          calendarDate = new Date(cellYear, cellMonth, 1);
+          renderScheduleCalendar();
+          renderTodoPanel();
+        };
+        grid.appendChild(btn);
+      }
+
+      note.textContent = allEntries.length ? "날짜를 누르면 일정을 볼 수 있어요." : "아직 일정이 없어요.";
+    }
+
+    function formatDateLabel(dateKey) {
+      if (!dateKey) return "아직 일정이 없어요.";
+      const [y, m, d] = dateKey.split('-');
+      return `${Number(m)}월 ${Number(d)}일`;
+    }
+
+    function renderTodoPanel() {
+      const panel = $("todoListPanel");
+      const entries = getEntriesForDate(selectedDateKey);
+      $("todoBoardDate").textContent = entries.length ? `${formatDateLabel(selectedDateKey)} · ${entries.length}개의 일정` : `${formatDateLabel(selectedDateKey)} · 아직 일정이 없어요.`;
+      if (!entries.length) {
+        panel.innerHTML = `<div class="todo-empty">아직 일정이 없어요.</div>`;
+        return;
+      }
+      panel.innerHTML = "";
+      entries.forEach(entry => {
+        const item = document.createElement("div");
+        item.className = "todo-item" + (entry.done ? " done" : "");
+        item.innerHTML = `<div><div class="todo-title">${escapeHtml(entry.title)}</div><div class="todo-note">${escapeHtml(entry.body || '')}</div></div><button type="button" class="todo-check ${entry.done ? 'done' : ''}" onclick="toggleDiaryDone(${entry.index})">✓</button><button type="button" class="todo-delete" onclick="deleteTodo(${entry.index})">×</button>`;
+        panel.appendChild(item);
+      });
+    }
+
+
+    function renderCalendarInto(gridId, yearId, monthId, noteId, baseDate, onSelect) {
+      const grid = $(gridId);
+      if (!grid) return;
+      const year = baseDate.getFullYear();
+      const month = baseDate.getMonth();
+      $(yearId).textContent = year;
+      $(monthId).textContent = new Date(year, month, 1).toLocaleString("en-US", { month: "long" });
+
+      const firstDay = new Date(year, month, 1);
+      const startWeekday = firstDay.getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const prevDays = new Date(year, month, 0).getDate();
+      const allEntries = nyTodoItemsOnly(getDiaryEntries());
+      const countFor = key => allEntries.filter(entry => entry.dateKey === key).length;
+      const todayKey = getTodayKey();
+
+      grid.innerHTML = "";
+      ["일","월","화","수","목","금","토"].forEach(day => {
+        const el = document.createElement("div");
+        el.className = "calendar-weekday";
+        el.textContent = day;
+        grid.appendChild(el);
+      });
+
+      for (let i = 0; i < 42; i++) {
+        let dayNum, cellMonth = month, cellYear = year, other = false;
+        if (i < startWeekday) {
+          dayNum = prevDays - startWeekday + i + 1;
+          cellMonth = month - 1;
+          if (cellMonth < 0) { cellMonth = 11; cellYear -= 1; }
+          other = true;
+        } else if (i >= startWeekday + daysInMonth) {
+          dayNum = i - (startWeekday + daysInMonth) + 1;
+          cellMonth = month + 1;
+          if (cellMonth > 11) { cellMonth = 0; cellYear += 1; }
+          other = true;
+        } else {
+          dayNum = i - startWeekday + 1;
+        }
+
+        const key = `${cellYear}-${String(cellMonth + 1).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+        const count = countFor(key);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className =
+          "calendar-day" +
+          (other ? " other-month" : "") +
+          (key === todayKey ? " today" : "") +
+          (key === selectedDateKey ? " selected" : "");
+
+        const icons = count > 0
+          ? `<div class="shell-indicators">${Array.from({ length: Math.min(count, 3) }).map(() => getShellIcon()).join("")}${count > 3 ? `<span class="shell-more">+${count - 3}</span>` : ""}</div>`
+          : `<div class="shell-indicators"></div>`;
+
+        btn.innerHTML = `<span class="day-number">${dayNum}</span>${icons}`;
+        btn.onclick = () => onSelect(key, cellYear, cellMonth);
+        grid.appendChild(btn);
+      }
+
+      if ($(noteId)) $(noteId).textContent = allEntries.length ? "날짜를 누르면 일정을 볼 수 있어요." : "아직 일정이 없어요.";
+    }
+
+    function renderHomeCalendar() {
+      renderCalendarInto("homeCalendarGrid", "homeCalendarYearLabel", "homeCalendarMonthLabel", "homeCalendarNote", homeCalendarDate, (key, year, month) => {
+        selectedDateKey = key;
+        homeCalendarDate = new Date(year, month, 1);
+        calendarDate = new Date(year, month, 1);
+        renderHomeCalendar();
+        renderScheduleCalendar();
+        renderTodoPanel();
+      });
+    }
+
+    function changeHomeCalendarMonth(offset) {
+      homeCalendarDate = new Date(homeCalendarDate.getFullYear(), homeCalendarDate.getMonth() + offset, 1);
+      renderHomeCalendar();
+    }
+
+
+    function changeCalendarMonth(offset) {
+      calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth() + offset, 1);
+      renderScheduleCalendar();
+      renderHomeCalendar();
+      renderTodoPanel();
+    }
+
+
+    let talkMessages = JSON.parse(localStorage.getItem("soluluTalkMessagesStable") || "[]");
+    let talkReplyTimer = null;
+    let talkIsTyping = false;
+    
+
+    function getTalkTime() {
+      const now = new Date();
+      return `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+    }
+
+    function saveTalkMessages() {
+      localStorage.setItem("soluluTalkMessagesStable", JSON.stringify(talkMessages));
+    }
+
+
+    function buildTalkSystemPrompt() {
+      const settings = typeof getBotSettings === "function" ? getBotSettings() : {};
+      const talkSettings = typeof getTalkSettings === "function" ? getTalkSettings() : {};
+      const characterName = typeof getCharacterName === "function" ? getCharacterName() : "소루루";
+
+      return [
+        "너는 현재 선택된 드림 캐릭터 역할로 사용자와 문자/카톡을 주고받는다.",
+        "응답은 톡처럼 짧고 자연스럽게 한다.",
+        "캐릭터가 직접 보낸 메시지만 작성한다.",
+        "",
+        "[현재 선택된 드림 캐릭터]",
+        characterName,
+        "",
+        "[캐릭터 설정]",
+        settings.character || "(아직 상세 캐릭터 설정 없음)",
+        "",
+        "[말투 설정]",
+        settings.speech || "(아직 말투 설정 없음)",
+        "",
+        "[드림 모드 설정]",
+        settings.dream || "(아직 드림 모드 설정 없음)",
+        "",
+        "[Talk 전용 캐해석]",
+        talkSettings.interpretation || "(아직 Talk 전용 캐해석 없음)",
+        "",
+        "[Talk 전용 분위기]",
+        talkSettings.mood || "(아직 Talk 전용 분위기 없음)"
+      ].join("\n");
+    }
+
+
+    function makeTalkReply(text) {
+      const short = String(text || "").trim();
+      if (short.includes("뭐해")) return "네 생각하고 있었어.";
+      if (short.includes("보고") || short.includes("좋아")) return "나도. 그래서 답장 기다리고 있었어.";
+      if (short.includes("힘들") || short.includes("지쳤") || short.includes("우울")) return "그랬구나. 지금은 나한테 기대도 돼.";
+      if (short.includes("?") || short.includes("？")) return "응. 네가 묻는 거라면 대답해주고 싶어.";
+      return "응, 읽었어. 조금 더 말해줘.";
+    }
+
+
+    function clearTalkHistory() {
+      clearTimeout(talkReplyTimer);
+      talkIsTyping = false;
+      talkMessages = [];
+      localStorage.removeItem("soluluTalkMessagesStable");
+      if ($("talkInput")) $("talkInput").disabled = false;
+      renderTalk();
+    }
+
+    function renderTalk() {
+      const screen = $("talkScreen");
+      if (!screen) return;
+      screen.innerHTML = "";
+
+      if (talkMessages.length === 0 && !talkIsTyping) {
+        const empty = document.createElement("div");
+        empty.className = "talk-empty";
+        empty.textContent = "아직 주고받은 톡이 없어요.";
+        screen.appendChild(empty);
+      }
+
+      talkMessages.forEach(msg => {
+        const row = document.createElement("div");
+        row.className = "talk-row " + (msg.role === "me" ? "me" : "bot");
+
+        const bubble = document.createElement("div");
+        bubble.className = "talk-bubble " + (msg.role === "me" ? "me" : "bot");
+        bubble.textContent = msg.text;
+
+        const time = document.createElement("div");
+        time.className = "talk-time";
+        time.textContent = msg.time || "";
+
+        if (msg.role === "me") {
+          row.appendChild(time);
+          row.appendChild(bubble);
+        } else {
+          row.appendChild(bubble);
+          row.appendChild(time);
+        }
+        screen.appendChild(row);
+      });
+
+      if (talkIsTyping) {
+        const typingRow = document.createElement("div");
+        typingRow.className = "talk-typing-row";
+        typingRow.innerHTML = `
+          <div class="talk-typing-bubble">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+          <div class="talk-time">typing</div>
+        `;
+        screen.appendChild(typingRow);
+      }
+
+      screen.scrollTop = screen.scrollHeight;
+    }
+
+    function sendTalk() {
+      const input = $("talkInput");
+      const text = input.value.trim();
+      if (!text || talkIsTyping) return;
+
+      talkMessages.push({ role: "me", text, time: getTalkTime() });
+      input.value = "";
+      saveTalkMessages();
+
+      talkIsTyping = true;
+      input.disabled = true;
+      renderTalk();
+
+      clearTimeout(talkReplyTimer);
+      const delay = Math.min(1800, Math.max(650, 420 + text.length * 35));
+
+      talkReplyTimer = setTimeout(() => {
+        talkIsTyping = false;
+        if ($("talkInput")) $("talkInput").disabled = false;
+        talkMessages.push({ role: "bot", text: makeTalkReply(text), time: getTalkTime() });
+        saveTalkMessages();
+        renderTalk();
+      }, delay);
+    }
+
+    function quickTalk(text) {
+      if (talkIsTyping) return;
+      $("talkInput").value = text;
+      sendTalk();
+    }
+
+
+
+    function getTalkSettings() {
+      return JSON.parse(localStorage.getItem("dreamTalkSettings") || "{}");
+    }
+
+    function saveTalkSettings() {
+      const data = {
+        interpretation: $("talkCharacterInterpretation") ? $("talkCharacterInterpretation").value.trim() : "",
+        mood: $("talkMoodSetting") ? $("talkMoodSetting").value.trim() : ""
+      };
+      localStorage.setItem("dreamTalkSettings", JSON.stringify(data));
+      alert("Talk 설정을 저장했어.");
+    }
+
+    function renderTalkSettings() {
+      const data = getTalkSettings();
+      if ($("talkCharacterInterpretation")) $("talkCharacterInterpretation").value = data.interpretation || "";
+      if ($("talkMoodSetting")) $("talkMoodSetting").value = data.mood || "";
+      renderDreamCharacterSelect();
+    }
+
+    async function saveDreamCharacterFromTalk() {
+      const name = $("talkNewCharacterName").value.trim();
+      const source = $("talkNewCharacterSource").value.trim();
+      const memo = $("talkNewCharacterMemo").value.trim();
+      const file = $("talkNewCharacterImage").files[0];
+
+      if (!name) {
+        alert("드림 캐릭터 이름을 적어줘.");
+        return;
+      }
+
+      const image = await readFileAsDataURL(file);
+      const id = "char_" + Date.now();
+      const chars = getDreamCharacters();
+      chars.push({ id, name, source, memo, image });
+      saveDreamCharacters(chars);
+      localStorage.setItem("activeDreamCharacterId", id);
+
+      ["talkNewCharacterName","talkNewCharacterSource","talkNewCharacterMemo"].forEach(inputId => $(inputId).value = "");
+      $("talkNewCharacterImage").value = "";
+
+      renderDreamCharacterSelect();
+      renderCharacterLabels();
+      alert("드림 캐릭터를 추가했어.");
+    }
+
+
+    setMode("viewer");
+    renderHome();
+    renderOCs();
+    renderYouTube();
+    renderMessages();
+    renderDiary();
+    renderScheduleCalendar();
+    renderHomeCalendar();
+    renderTodoPanel();
+    renderBotSettings();
+    renderTalk();
+  </script>
+
+  <script>
+    window.NY_ALLOWED_PASSWORDS = ["ribbon"];
+
+    function nyNormalizePassword(value) {
+      return String(value || "").trim();
+    }
+
+    function nyIsPasswordOk(value) {
+      return nyNormalizePassword(value) === "ribbon";
+    }
+
+    window.enterPrivate = function () {
+      const input = document.getElementById("passwordInput");
+      if (input && nyIsPasswordOk(input.value)) {
+        if (typeof closeGate === "function") closeGate();
+        const privateSection = document.getElementById("section-private");
+        const privateBtn = document.querySelector('button[onclick*="private"]');
+        if (privateSection) {
+          document.querySelectorAll(".section").forEach(section => section.classList.remove("active"));
+          privateSection.classList.add("active");
+        }
+        document.querySelectorAll(".menu button").forEach(button => button.classList.remove("active"));
+        if (privateBtn) privateBtn.classList.add("active");
+      } else {
+        alert("비밀번호가 달라!");
+      }
+    };
+
+    window.nyConfirmEdit = function () {
+      const input = document.getElementById("nyEditPassword") || document.getElementById("prettyEditPassword") || document.getElementById("editPasswordInput");
+      if (!input || !nyIsPasswordOk(input.value)) {
+        alert("비밀번호가 달라!");
+        return;
+      }
+
+      if (typeof nyCloseModal === "function") nyCloseModal("nyEditGate");
+      if (typeof closePrettyModal === "function") closePrettyModal("prettyEditGate");
+      const editGate = document.getElementById("editGate");
+      if (editGate) editGate.classList.remove("open");
+
+      document.body.classList.add("edit-mode");
+      const viewer = document.getElementById("viewerBtn");
+      const edit = document.getElementById("editBtn");
+      if (viewer) viewer.classList.remove("active");
+      if (edit) edit.classList.add("active");
+      if (typeof setMode === "function") setMode("edit");
+    };
+
+    window.confirmEditGate = window.nyConfirmEdit;
+    window.confirmPrettyEdit = window.nyConfirmEdit;
+
+    window.nyConfirmClear = function () {
+      const input = document.getElementById("nyClearPassword") || document.getElementById("prettyClearPassword") || document.getElementById("clearPasswordInput");
+      if (!input || !nyIsPasswordOk(input.value)) {
+        alert("비밀번호가 달라!");
+        return;
+      }
+
+      const target = window.__nyPendingClear || window.__prettyClearTarget || window.pendingClearTarget || "";
+
+      if (target === "Chat") {
+        try { if (typeof chatReplyTimer !== "undefined") clearTimeout(chatReplyTimer); } catch(e) {}
+        try { if (typeof chatIsTyping !== "undefined") chatIsTyping = false; } catch(e) {}
+        try { if (typeof messages !== "undefined") messages.length = 0; } catch(e) {}
+        if (typeof nyMarkChatCleared === "function") nyMarkChatCleared();
+        [
+          "nyDreamChatMessages",
+          "dreamCharacterChatMessages",
+          "dreamCharacterChatMessagesV2",
+          "dreamCharacterChatMessagesV3",
+          "soluluChatMessages"
+        ].forEach(key => localStorage.removeItem(key));
+        const chatInput = document.getElementById("chatInput");
+        if (chatInput) chatInput.disabled = false;
+        try { if (typeof renderMessages === "function") renderMessages(); } catch(e) {}
+      }
+
+      if (target === "Talk") {
+        try { if (typeof talkReplyTimer !== "undefined") clearTimeout(talkReplyTimer); } catch(e) {}
+        try { if (typeof talkIsTyping !== "undefined") talkIsTyping = false; } catch(e) {}
+        try { if (typeof talkMessages !== "undefined") talkMessages.length = 0; } catch(e) {}
+        [
+          "nyDreamTalkMessages",
+          "soluluTalkMessages",
+          "soluluTalkMessagesV2",
+          "soluluTalkMessagesStable",
+          "dreamCharacterTalkMessages",
+          "dreamCharacterTalkMessagesV3",
+          "dreamCharacterTalkMessagesApiReady"
+        ].forEach(key => localStorage.removeItem(key));
+        const talkInput = document.getElementById("talkInput");
+        if (talkInput) talkInput.disabled = false;
+        try { if (typeof renderTalk === "function") renderTalk(); } catch(e) {}
+      }
+
+      if (typeof nyCloseModal === "function") nyCloseModal("nyClearGate");
+      if (typeof closePrettyModal === "function") closePrettyModal("prettyClearGate");
+      const clearGate = document.getElementById("clearGate");
+      if (clearGate) clearGate.classList.remove("open");
+    };
+
+    window.confirmClearGate = window.nyConfirmClear;
+    window.confirmPrettyClear = window.nyConfirmClear;
+  </script>
+
+
+  <script>
+    (function () {
+      function qs(id) {
+        return document.getElementById(id);
+      }
+
+      window.extractYouTubeId = function (url) {
+        const text = String(url || "").trim();
+        if (!text) return "";
+        const patterns = [
+          /youtu\.be\/([a-zA-Z0-9_-]{6,})/,
+          /youtube\.com\/watch\?[^#]*v=([a-zA-Z0-9_-]{6,})/,
+          /youtube\.com\/embed\/([a-zA-Z0-9_-]{6,})/,
+          /youtube\.com\/shorts\/([a-zA-Z0-9_-]{6,})/,
+          /youtube\.com\/live\/([a-zA-Z0-9_-]{6,})/
+        ];
+        for (const pattern of patterns) {
+          const match = text.match(pattern);
+          if (match) return match[1];
+        }
+        if (/^[a-zA-Z0-9_-]{6,}$/.test(text)) return text;
+        return "";
+      };
+
+      window.getYouTubeData = function () {
+        try {
+          return JSON.parse(localStorage.getItem("shellYouTube") || "null") || window.DEFAULT_SHELL_YOUTUBE || {};
+        } catch (e) {
+          return window.DEFAULT_SHELL_YOUTUBE || {};
+        }
+      };
+
+      window.saveYouTube = function () {
+        const title = qs("youtubeTitle") ? qs("youtubeTitle").value.trim() : "";
+        const artist = qs("youtubeArtist") ? qs("youtubeArtist").value.trim() : "";
+        const url = qs("youtubeUrl") ? qs("youtubeUrl").value.trim() : "";
+        const id = window.extractYouTubeId(url);
+        if (!id) {
+          alert("유튜브 링크를 확인해줘!");
+          return;
+        }
+        const parsedUrl = new URL(url);
+        const list = parsedUrl.searchParams.get("list") || "";
+        const t = parsedUrl.searchParams.get("t") || parsedUrl.searchParams.get("start") || "";
+        const start = String(t).replace(/s$/, "");
+        localStorage.setItem("shellYouTube", JSON.stringify({
+          id,
+          list,
+          start,
+          title: title || "저장된 음악",
+          artist: artist || "",
+          url
+        }));
+        window.renderYouTube();
+        window.startYouTube();
+      };
+
+      window.renderYouTube = function () {
+        const data = window.getYouTubeData();
+        const isPlaying = !!(qs("youtubeFrame") && qs("youtubeFrame").src);
+        if (qs("musicTitle")) qs("musicTitle").textContent = data.title || "아직 저장된 음악이 없어요.";
+        if (qs("musicArtist")) qs("musicArtist").textContent = data.artist || "";
+        if (qs("youtubeTitle")) qs("youtubeTitle").value = data.title || "";
+        if (qs("youtubeArtist")) qs("youtubeArtist").value = data.artist || "";
+        if (qs("youtubeUrl")) qs("youtubeUrl").value = data.url || "";
+        if (qs("playButton")) qs("playButton").textContent = isPlaying ? "⏸" : "▶";
+        if (qs("musicProgress")) qs("musicProgress").style.width = isPlaying ? "68%" : "38%";
+
+        const help = qs("musicHelp");
+        if (help) {
+          help.textContent = "";
+        }
+
+        const box = qs("youtubePlayerBox");
+        if (box) box.classList.toggle("active", !!data.id && isPlaying);
+      };
+
+      window.buildYouTubeSrc = function (id, autoplay) {
+        const data = window.getYouTubeData ? window.getYouTubeData() : {};
+        const params = new URLSearchParams({
+          autoplay: autoplay ? "1" : "0",
+          loop: data.list ? "0" : "1",
+          controls: "1",
+          modestbranding: "1",
+          rel: "0",
+          playsinline: "1"
+        });
+
+        if (data.list) params.set("list", data.list);
+        else params.set("playlist", id);
+
+        if (data.start) params.set("start", String(data.start).replace(/s$/, ""));
+
+        return "https://www.youtube.com/embed/" + id + "?" + params.toString();
+      };
+
+      window.startYouTube = function () {
+        const data = window.getYouTubeData();
+        if (!data.id) {
+          window.renderYouTube();
+          alert("먼저 편집모드에서 유튜브 링크를 저장해줘.");
+          return;
+        }
+        const frame = qs("youtubeFrame");
+        if (!frame) {
+          alert("유튜브 플레이어를 찾지 못했어.");
+          return;
+        }
+        frame.src = window.buildYouTubeSrc(data.id, true);
+        window.renderYouTube();
+      };
+
+      window.stopYouTube = function () {
+        const frame = qs("youtubeFrame");
+        if (frame) frame.src = "";
+        window.renderYouTube();
+      };
+
+      window.restartYouTube = function () {
+        window.stopYouTube();
+        setTimeout(window.startYouTube, 180);
+      };
+
+      window.toggleYouTube = function () {
+        const frame = qs("youtubeFrame");
+        if (frame && frame.src) window.stopYouTube();
+        else window.startYouTube();
+      };
+
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof window.renderYouTube === "function") window.renderYouTube();
+      });
+    })();
+  </script>
+
+
+  <script>
+    (function () {
+      const SAFE_DEFAULT = {
+        id: "BV62zJkSQpc",
+        list: "",
+        start: "1029",
+        title: "Music Box",
+        artist: "YouTube",
+        url: "https://www.youtube.com/watch?v=BV62zJkSQpc&t=1029s"
+      };
+
+      function qs(id) {
+        return document.getElementById(id);
+      }
+
+      window.getYouTubeData = function () {
+        try {
+          return JSON.parse(localStorage.getItem("shellYouTube") || "null") || SAFE_DEFAULT;
+        } catch (e) {
+          return SAFE_DEFAULT;
+        }
+      };
+
+      window.openYouTubeExternal = function () {
+        const data = window.getYouTubeData();
+        const link = data.url || "https://www.youtube.com/watch?v=BV62zJkSQpc&t=1029s";
+        window.open(link, "_blank", "noopener,noreferrer");
+      };
+
+      window.buildYouTubeSrc = function (id, autoplay) {
+        const data = window.getYouTubeData();
+        const params = new URLSearchParams({
+          autoplay: autoplay ? "1" : "0",
+          controls: "1",
+          modestbranding: "1",
+          rel: "0",
+          playsinline: "1",
+          start: String(data.start || "1029").replace(/s$/, "")
+        });
+
+        // 오류 153 방지를 위해 RD playlist/radio embed는 쓰지 않고 단일 영상으로 먼저 재생.
+        return "https://www.youtube.com/embed/" + (id || "BV62zJkSQpc") + "?" + params.toString();
+      };
+
+      window.startYouTube = function () {
+        const data = window.getYouTubeData();
+        const frame = qs("youtubeFrame");
+        if (!frame) {
+          alert("유튜브 플레이어를 찾지 못했어.");
+          return;
+        }
+
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+        frame.src = window.buildYouTubeSrc(data.id || "BV62zJkSQpc", true);
+
+        const box = qs("youtubePlayerBox");
+        if (box) box.classList.add("active");
+        if (qs("playButton")) qs("playButton").textContent = "⏸";
+        if (qs("musicProgress")) qs("musicProgress").style.width = "68%";
+        if (qs("musicHelp")) qs("musicHelp").textContent = "";
+      };
+
+      window.stopYouTube = function () {
+        const frame = qs("youtubeFrame");
+        if (frame) frame.src = "";
+        const box = qs("youtubePlayerBox");
+        if (box) box.classList.remove("active");
+        if (qs("playButton")) qs("playButton").textContent = "▶";
+        if (qs("musicProgress")) qs("musicProgress").style.width = "38%";
+      };
+
+      window.toggleYouTube = function () {
+        const frame = qs("youtubeFrame");
+        if (frame && frame.src) window.stopYouTube();
+        else window.startYouTube();
+      };
+
+      window.restartYouTube = function () {
+        window.stopYouTube();
+        setTimeout(window.startYouTube, 180);
+      };
+
+      const oldRender = window.renderYouTube;
+      window.renderYouTube = function () {
+        const data = window.getYouTubeData();
+        if (qs("musicTitle")) qs("musicTitle").textContent = data.title || "Music Box";
+        if (qs("musicArtist")) qs("musicArtist").textContent = data.artist || "YouTube";
+        if (qs("youtubeTitle")) qs("youtubeTitle").value = data.title || "";
+        if (qs("youtubeArtist")) qs("youtubeArtist").value = data.artist || "";
+        if (qs("youtubeUrl")) qs("youtubeUrl").value = data.url || "";
+        if (qs("musicHelp")) qs("musicHelp").textContent = "";
+      };
+    })();
+  </script>
+
+
+  <script>
+    // Cloud Sync v1: localStorage changes -> Netlify Blobs via Function.
+    // 같은 사이트를 휴대폰/컴퓨터/친구가 열어도 저장 내용이 공유되게 해주는 레이어.
+    (function () {
+      const SYNC_KEYS = new Set(["activeDreamCharacterId", "dreamCharacterChatMessages", "dreamCharacterChatMessagesV2", "dreamCharacterChatMessagesV3", "dreamCharacterTalkMessages", "dreamCharacterTalkMessagesApiReady", "dreamCharacterTalkMessagesV3", "dreamCharactersList", "dreamTalkSettings", "homeData", "nyChatCleared", "nyDreamChatMessages", "nyDreamTalkMessages", "nySecretDiaryEntries", "nyTodoEntries", "ocClosetData", "shellDiary", "shellHome", "shellHomeData", "shellOCs", "shellProfile", "shellSchedule", "shellYouTube", "soluluChatMessages", "soluluTalkMessages", "soluluTalkMessagesStable", "soluluTalkMessagesV2"]);
+      const API_URL = "/.netlify/functions/site-state";
+      let applyingCloudState = false;
+      let syncTimer = null;
+
+      const rawSetItem = Storage.prototype.setItem;
+      const rawRemoveItem = Storage.prototype.removeItem;
+
+      function getSyncPassword() {
+        return sessionStorage.getItem("nySyncPassword") || "";
+      }
+
+      function rememberSyncPassword(value) {
+        const pw = String(value || "").trim();
+        if (pw) sessionStorage.setItem("nySyncPassword", pw);
+      }
+
+      window.nyRememberSyncPassword = rememberSyncPassword;
+
+      function collectState() {
+        const state = {};
+        SYNC_KEYS.forEach(key => {
+          const value = localStorage.getItem(key);
+          if (value !== null) state[key] = value;
+        });
+        return state;
+      }
+
+      function applyState(state) {
+        if (!state || typeof state !== "object") return;
+        applyingCloudState = true;
+        try {
+          SYNC_KEYS.forEach(key => rawRemoveItem.call(localStorage, key));
+          Object.entries(state).forEach(([key, value]) => {
+            if (SYNC_KEYS.has(key) && value !== null && value !== undefined) {
+              rawSetItem.call(localStorage, key, String(value));
+            }
+          });
+        } finally {
+          applyingCloudState = false;
+        }
+        rerenderAll();
+      }
+
+      function rerenderAll() {
+        [
+          "renderHome",
+          "renderOCs",
+          "renderYouTube",
+          "renderDiary",
+          "renderScheduleCalendar",
+          "renderHomeCalendar",
+          "renderTodoPanel",
+          "renderMessages",
+          "renderTalk",
+          "renderDreamCharacterSelect",
+          "renderCharacterLabels",
+          "renderTalkSettings",
+          "renderOCCloset"
+        ].forEach(name => {
+          try {
+            if (typeof window[name] === "function") window[name]();
+          } catch (e) {}
+        });
+      }
+
+      async function loadCloudState() {
+        try {
+          const res = await fetch(API_URL, { method: "GET", cache: "no-store" });
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data && data.state) applyState(data.state);
+        } catch (e) {
+          console.warn("cloud sync load failed", e);
+        }
+      }
+
+      async function saveCloudState() {
+        const password = getSyncPassword();
+        // SITE_PASSWORD를 Netlify에 설정했다면 비밀번호를 모르면 서버 저장은 거부돼.
+        try {
+          await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              password,
+              state: collectState()
+            })
+          });
+        } catch (e) {
+          console.warn("cloud sync save failed", e);
+        }
+      }
+
+      function scheduleSync(key) {
+        if (applyingCloudState || !SYNC_KEYS.has(key)) return;
+        clearTimeout(syncTimer);
+        syncTimer = setTimeout(saveCloudState, 550);
+      }
+
+      Storage.prototype.setItem = function (key, value) {
+        rawSetItem.call(this, key, value);
+        if (this === localStorage) scheduleSync(key);
+      };
+
+      Storage.prototype.removeItem = function (key) {
+        rawRemoveItem.call(this, key);
+        if (this === localStorage) scheduleSync(key);
+      };
+
+      // 편집모드/비밀방/clear 비밀번호를 입력하면 그 값을 서버 저장용 비밀번호로도 기억.
+      document.addEventListener("input", function (event) {
+        if (event.target && event.target.type === "password") {
+          rememberSyncPassword(event.target.value);
+        }
+      }, true);
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" && event.target && event.target.type === "password") {
+          rememberSyncPassword(event.target.value);
+        }
+      }, true);
+
+      window.addEventListener("DOMContentLoaded", loadCloudState);
+      window.nyLoadCloudState = loadCloudState;
+      window.nySaveCloudState = saveCloudState;
+    })();
+  </script>
+
+</body>
+</html>
